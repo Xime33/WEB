@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { Menu, X } from "lucide-react";
+
 
 const navItems = [
   { id: "inicio", label: "Inicio" },
@@ -176,32 +178,99 @@ function LiquidDrips() {
 
 
 function Header({ page, setPage }) {
+  const [open, setOpen] = useState(false);
+
   return (
     <header className="fixed left-0 right-0 top-0 z-50 px-4 pt-4 md:px-8">
-      <div className="mx-auto flex max-w-7xl items-center justify-between rounded-full border border-white/40 bg-white/85 px-4 py-3 shadow-lg">
-        <button
-          onClick={() => setPage("inicio")}
-          className="text-left text-xl font-black tracking-tight text-zinc-900"
-        >
-          Crep!simo
-        </button>
+      <div className="mx-auto max-w-7xl rounded-full border border-white/40 bg-white/85 px-4 py-3 shadow-lg">
+        <div className="flex items-center justify-between">
+          {/* LOGO */}
+          <button
+            onClick={() => setPage("inicio")}
+            className="text-left text-xl font-black tracking-tight text-zinc-900"
+          >
+            Crep!simo
+          </button>
 
-        <nav className="hidden items-center gap-2 md:flex">
-          {navItems.map((item) => (
-            <button
-              key={item.id}
-              onClick={() => setPage(item.id)}
-              className={`rounded-full px-4 py-2 text-sm font-semibold transition ${
-                page === item.id
-                  ? "bg-white text-zinc-900"
-                  : "text-zinc-700 hover:bg-white/40"
-              }`}
+          {/* BOTÓN HAMBURGUESA (solo móvil) */}
+          <button
+              onClick={() => setOpen(!open)}
+              className="flex h-10 w-10 items-center justify-center md:hidden"
             >
-              {item.label}
-            </button>
-          ))}
-        </nav>
+              <AnimatePresence mode="wait">
+                {open ? (
+                  <motion.div
+                    key="close"
+                    initial={{ opacity: 0, scale: 0.6, rotate: -90 }}
+                    animate={{ opacity: 1, scale: 1, rotate: 0 }}
+                    exit={{ opacity: 0, scale: 0.6, rotate: 90 }}
+                    transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                  >
+                    <X size={22} />
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    key="menu"
+                    initial={{ opacity: 0, scale: 0.6, rotate: 90 }}
+                    animate={{ opacity: 1, scale: 1, rotate: 0 }}
+                    exit={{ opacity: 0, scale: 0.6, rotate: -90 }}
+                    transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                  >
+                    <Menu size={22} />
+                  </motion.div>
+                )}
+              </AnimatePresence>
+          </button>
+
+          {/* MENU DESKTOP (igual que antes) */}
+          <nav className="hidden items-center gap-2 md:flex">
+            {navItems.map((item) => (
+              <button
+                key={item.id}
+                onClick={() => setPage(item.id)}
+                className={`rounded-full px-4 py-2 text-sm font-semibold transition ${
+                  page === item.id
+                    ? "bg-white text-zinc-900"
+                    : "text-zinc-700 hover:bg-white/40"
+                }`}
+              >
+                {item.label}
+              </button>
+            ))}
+          </nav>
+        </div>
       </div>
+
+      {/* MENU DESPLEGABLE */}
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            className="mx-auto mt-3 max-w-7xl rounded-[2rem] border border-white/40 bg-white/90 p-4 shadow-lg md:hidden"
+          >
+            <nav className="flex flex-col gap-2">
+              {navItems.map((item) => (
+                <button
+                  key={item.id}
+                  onClick={() => {
+                    setPage(item.id);
+                    setOpen(false);
+                  }}
+                  className={`rounded-full px-4 py-3 text-left text-sm font-semibold transition ${
+                    page === item.id
+                      ? "bg-white text-zinc-900"
+                      : "text-zinc-700 hover:bg-white/40"
+                  }`}
+                >
+                  {item.label}
+                </button>
+              ))}
+            </nav>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   );
 }
