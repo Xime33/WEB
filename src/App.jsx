@@ -11,40 +11,39 @@ const navItems = [
 
 const branches = [
   {
-    city: "Oaxaca",
-    subtitle: "Sucursal activa",
-    text: "Espacio con identidad visual fuerte, experiencia instagrameable y presencia de marca reconocible.",
+    city: "Tlaxcala",
+    address: "Revolución 17, San Buenaventura Atempa, Tlaxcala",
+  },
+  {
+    city: "El Carmen",
+    address: "El Carmen",
+  },
+  {
+    city: "Oaxaca Centro",
+    address: "Oaxaca Centro",
   },
   {
     city: "Puebla",
-    subtitle: "Sucursal activa",
-    text: "Ubicación clave para fortalecer la expansión regional y posicionar el concepto Crep!simo.",
+    address: "Blvrd Circunvalación 1039, Jardines de San Manuel, 72570 Heroica Puebla de Zaragoza, Pue.",
   },
   {
-    city: "Nueva ciudad",
-    subtitle: "Próxima franquicia",
-    text: "Página pensada para atraer inversionistas y presentar la oportunidad de abrir una nueva sucursal.",
+    city: "San Francisco Telixtlahuaca",
+    address: "San Francisco Telixtlahuaca, Oaxaca",
   },
 ];
 
-const newsCards = [
+const featuredPhotos = [
   {
-    title: 'Nueva sucursal “El Carmen”',
-    category: 'Anuncio',
-    text: 'Presenta aperturas, ubicaciones nuevas y crecimiento de la marca con un formato visual llamativo.',
-    theme: 'branch',
+    
+    image: "/el carmen.png",
   },
   {
-    title: 'Sodas italianas y bebidas',
-    category: 'Producto',
-    text: 'Muestra bebidas estrella, colores de la marca y lanzamientos visuales que conecten con redes sociales.',
-    theme: 'drinks',
+    
+    image: "/bebida.png",
   },
   {
-    title: 'Promociones y combos especiales',
-    category: 'Campaña',
-    text: 'Ideal para temporadas como San Valentín, promociones limitadas o campañas temáticas de Crep!simo.',
-    theme: 'promo',
+    
+    image: "/promo.png",
   },
 ];
 
@@ -63,19 +62,19 @@ const concentrates = [
   },
 ];
 
-const dripColors = [
-  "#ffe27a",
-  "#7fd3f4",
-  "#ff8a66",
-  "#ffd1e6",
-  "#b9a6d9",
-];
-
 function LiquidDrips() {
-  // capas: atrás (más rápido) → adelante (más lento)
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
   const layers = [
     {
-      color: "#ff6b57",
+      color: "#ff57b3",
       height: 520,
       duration: 20,
       delay: 0,
@@ -91,7 +90,6 @@ function LiquidDrips() {
       duration: 26,
       delay: 2.2,
       opacity: 1,
-      // ola amplia anclada a la esquina derecha (como las demás, pero “naciendo” en la orilla)
       pathA:
         "M0 62 C140 30, 300 84, 460 62 C620 40, 780 86, 940 62 C1100 38, 1260 86, 1440 62 L1440 0 C1380 8, 1320 28, 1260 58 C1200 88, 1140 120, 1080 156 C1016 194, 960 238, 902 266 C844 294, 784 310, 724 298 C664 286, 620 254, 564 254 C504 254, 462 298, 404 312 C346 326, 300 302, 244 286 C188 270, 140 286, 92 312 C44 338, 14 354, 0 362 Z",
       pathB:
@@ -126,25 +124,23 @@ function LiquidDrips() {
   return (
     <div className="absolute inset-0 overflow-hidden bg-[#f2bbd7]">
       {layers.map((layer, i) => (
-        // si invertMotion = true, se invierte la animación respecto a las otras capas
         <motion.div
           key={i}
           className="absolute left-0 w-full"
           style={{
             top: 0,
-            height: layer.height,
+            height: isMobile ? layer.height * 0.82 : layer.height,
             zIndex: layer.color === "#ffd84d" ? 1 : i + 2,
             opacity: layer.opacity,
             transform: layer.tilt ? "skewX(-8deg) rotate(-1.5deg)" : "none",
             transformOrigin: "top left",
+            overflow: "hidden",
           }}
           initial={{ y: -130 }}
           animate={
-            layer.cornerBlob
-              ? { y: [-34, -18, -28, -20], x: [10, 0, 6, 0], scaleX: [1, 1.03, 0.98, 1], scaleY: [1, 0.98, 1.03, 1] }
-              : layer.invertMotion
-                ? { y: [-20, -60, -30, -130] }
-                : { y: [-130, -20, -40, -30] }
+            layer.invertMotion
+              ? { y: [-20, -60, -30, -130] }
+              : { y: [-130, -20, -40, -30] }
           }
           transition={{
             duration: layer.duration,
@@ -154,18 +150,22 @@ function LiquidDrips() {
             ease: [0.42, 0, 0.22, 1],
           }}
         >
-          <svg viewBox="0 0 1440 600" className="h-full w-full" preserveAspectRatio="none">
+          <svg
+            viewBox="0 0 1440 600"
+            className="h-full w-full"
+            preserveAspectRatio="xMidYMid slice"
+          >
             <motion.path
               fill={layer.color}
               initial={{ d: layer.pathA }}
               animate={{ d: [layer.pathA, layer.pathB, layer.pathA] }}
               transition={{
-            duration: layer.duration,
-            delay: layer.delay,
-            repeat: Infinity,
-            repeatType: "mirror",
-            ease: [0.42, 0, 0.22, 1],
-          }}
+                duration: layer.duration,
+                delay: layer.delay,
+                repeat: Infinity,
+                repeatType: "mirror",
+                ease: [0.42, 0, 0.22, 1],
+              }}
             />
           </svg>
         </motion.div>
@@ -173,6 +173,7 @@ function LiquidDrips() {
     </div>
   );
 }
+
 
 function Header({ page, setPage }) {
   return (
@@ -205,73 +206,35 @@ function Header({ page, setPage }) {
   );
 }
 
-function NewsCard({ item }) {
+function FeaturedPhotoCard({ item }) {
   return (
-    <article className="overflow-hidden rounded-[2rem] bg-white shadow-[0_20px_60px_rgba(0,0,0,0.08)] ring-1 ring-white/70">
-      <div className="relative h-[320px] overflow-hidden">
-        {item.theme === 'branch' && (
-          <div className="relative flex h-full items-end justify-center bg-[#e9cbff] p-8 text-center">
-            <div className="absolute left-0 top-0 h-28 w-40 rounded-br-[4rem] bg-[#f1a9ff] shadow-[inset_0_0_30px_rgba(255,255,255,0.4)]" />
-            <div className="absolute right-0 top-0 h-48 w-40 rounded-bl-[4rem] bg-[#f0b8ff] shadow-[inset_0_0_30px_rgba(255,255,255,0.35)]" />
-            <div className="absolute right-0 top-24 h-44 w-28 rounded-l-[3rem] bg-[#efb1ff] shadow-[inset_0_0_24px_rgba(255,255,255,0.25)]" />
-            <div className="relative z-10">
-              <p className="text-lg font-semibold lowercase tracking-wide text-fuchsia-700">nueva sucursal</p>
-              <h3 className="mt-1 text-5xl font-black text-fuchsia-700" style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}>
-                “El Carmen”
-              </h3>
-            </div>
-          </div>
-        )}
-
-        {item.theme === 'drinks' && (
-          <div className="relative flex h-full items-end justify-center gap-6 bg-gradient-to-b from-white via-white to-[#fff4ef] p-8">
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.95),transparent_40%)]" />
-            <div className="relative h-56 w-28 rounded-b-[2rem] rounded-t-[3rem] bg-gradient-to-b from-[#8ee4ff] via-[#43c8ff] to-[#1947b8] shadow-xl">
-              <div className="absolute left-1/2 top-2 h-6 w-20 -translate-x-1/2 rounded-full bg-white/45" />
-              <div className="absolute left-1/2 top-10 h-10 w-20 -translate-x-1/2 rounded-full border border-white/50 bg-white/20" />
-              <div className="absolute left-1/2 top-20 h-20 w-[3px] -translate-x-1/2 bg-white/60" />
-              <div className="absolute left-1/2 top-[6.3rem] h-20 w-20 -translate-x-1/2 rounded-full border border-white/40 bg-white/15" />
-              <div className="absolute left-1/2 top-24 flex h-16 w-16 -translate-x-1/2 items-center justify-center rounded-full bg-pink-500 text-3xl font-black text-white">C!</div>
-            </div>
-            <div className="relative h-48 w-24 rounded-b-[2rem] rounded-t-[3rem] bg-gradient-to-b from-[#ffd7ef] via-[#ff8f7b] to-[#ff4c2f] shadow-xl opacity-90">
-              <div className="absolute left-1/2 top-2 h-5 w-16 -translate-x-1/2 rounded-full bg-white/45" />
-              <div className="absolute left-1/2 top-8 h-8 w-16 -translate-x-1/2 rounded-full border border-white/50 bg-white/20" />
-              <div className="absolute left-1/2 top-16 h-14 w-[3px] -translate-x-1/2 bg-white/60" />
-              <div className="absolute left-1/2 top-20 flex h-12 w-12 -translate-x-1/2 items-center justify-center rounded-full bg-blue-500 text-2xl font-black text-white">C!</div>
-            </div>
-          </div>
-        )}
-
-        {item.theme === 'promo' && (
-          <div className="relative flex h-full items-center justify-center bg-[#f6efe6] p-6">
-            <div className="absolute inset-0 opacity-90 [background-image:radial-gradient(circle_at_20px_20px,rgba(255,255,255,0.6)_2px,transparent_2px)] [background-size:28px_28px]" />
-            <div className="absolute top-4 left-4 text-sm font-black uppercase tracking-wide text-rose-500">San Valentín</div>
-            <div className="relative z-10 text-center">
-              <div className="mx-auto mb-4 h-28 w-28 rounded-full bg-pink-400" />
-              <p className="text-5xl font-black text-lime-500">$279</p>
-              <p className="mt-2 text-3xl font-black text-orange-400">Combo Parejísima</p>
-              <p className="mt-2 text-sm font-bold text-zinc-900">2 crepas especiales y 2 bebidas a elegir</p>
-            </div>
-          </div>
-        )}
-      </div>
-
-      <div className="p-6 text-left">
-        <p className="text-xs font-bold uppercase tracking-[0.22em] text-pink-500">{item.category}</p>
-        <h3 className="mt-3 text-2xl font-black tracking-tight text-zinc-900">{item.title}</h3>
-        <p className="mt-3 text-sm leading-7 text-zinc-600">{item.text}</p>
+    <article className="group overflow-hidden rounded-[2.2rem] bg-white/35 shadow-[0_20px_50px_rgba(0,0,0,0.08)] ring-1 ring-white/50 backdrop-blur-sm transition duration-300 hover:-translate-y-1">
+      <div className="relative aspect-[4/5] overflow-hidden">
+        <img
+          src={item.image}
+          alt={item.title}
+          className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+        />
+        <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/35 via-black/10 to-transparent p-5">
+          <p
+            className="text-xl font-black text-white drop-shadow"
+            style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}
+          >
+            {item.title}
+          </p>
+        </div>
       </div>
     </article>
   );
 }
 
-function HomePage({ setPage }) {
+function HomePage() {
   return (
-    <div className="relative bg-transparent">
-      <section className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-6 text-center">
+    <div className="relative bg-[#f2bbd7]">
+      <section className="relative flex min-h-[88vh] flex-col items-center justify-center overflow-hidden px-6 pt-24 text-center">
         <LiquidDrips />
 
-        <div className="relative z-10 flex min-h-screen flex-col items-center justify-center text-center">
+        <div className="relative z-10 flex min-h-[58vh] flex-col items-center justify-start pt-2 text-center">
           <motion.div
             initial={{ y: -70, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
@@ -294,67 +257,36 @@ function HomePage({ setPage }) {
               transition={{ duration: 0.9, delay: 0.85 }}
               className="mt-3 text-base font-semibold uppercase tracking-[0.45em] text-white md:text-xl"
             >
-              Crepería
+              Creperías
             </motion.p>
-          </motion.div>
-
-          <motion.p
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: 1.05 }}
-            className="mt-8 max-w-2xl text-sm leading-7 text-white md:text-base"
-          >
-            Una marca colorida, memorable y lista para crecer a través de sucursales, franquicias y productos propios.
-          </motion.p>
-
-          <motion.div
-            initial={{ opacity: 0, y: 26 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: 1.2 }}
-            className="mt-8 flex flex-wrap items-center justify-center gap-4"
-          >
-            <button
-              onClick={() => setPage('franquicia')}
-              className="rounded-full bg-white px-6 py-3 text-sm font-bold text-zinc-900 shadow-xl"
-            >
-              Ver franquicia
-            </button>
-            <button
-              onClick={() => setPage('sucursales')}
-              className="rounded-full border border-white/60 bg-white/20 px-6 py-3 text-sm font-bold text-white"
-            >
-              Explorar sucursales
-            </button>
           </motion.div>
         </div>
       </section>
 
-      <section className="relative z-10 bg-[#fff8fc] px-6 pb-20 pt-8 md:px-10 md:pt-16">
-        <div className="mx-auto max-w-7xl">
-          <div className="max-w-2xl">
-            <p className="text-sm font-bold uppercase tracking-[0.25em] text-pink-500">Novedades</p>
-            <h2 className="mt-3 text-4xl font-black tracking-tight text-zinc-900 md:text-5xl">
-              Anuncios, productos y campañas de la marca
-            </h2>
-            <p className="mt-4 text-lg leading-8 text-zinc-600">
-              Esta parte puede funcionar como noticias visuales de Crep!simo: aperturas, bebidas, promociones y contenido que ayude a vender la marca.
+      <section className="relative z-10 -mt-80 px-6 pb-24 md:-mt-[24rem] md:px-10">
+        <div className="mx-auto max-w-6xl">
+          <div className="mb-6 text-center">
+            <p className="text-sm font-bold uppercase tracking-[0.3em] text-white/90">
+              Lo nuevo en Crep!simo
             </p>
           </div>
 
-          <div className="mt-10 grid gap-6 lg:grid-cols-3">
-            {newsCards.map((item) => (
-              <NewsCard key={item.title} item={item} />
+          <div className="grid gap-6 md:grid-cols-3">
+            {featuredPhotos.map((item) => (
+              <FeaturedPhotoCard key={item.title} item={item} />
             ))}
           </div>
         </div>
       </section>
+
+      <div className="h-24 bg-gradient-to-b from-[#f2bbd7] to-[#fff8fc]" />
     </div>
   );
 }
 
 function PageShell({ eyebrow, title, description, children }) {
   return (
-    <div className="min-h-screen bg-[#fff8fc] px-6 pb-16 pt-32 md:px-10">
+    <div className="min-h-screen bg-[#fff6fb] px-6 pb-16 pt-32 md:px-10">
       <div className="mx-auto max-w-7xl">
         <p className="text-sm font-bold uppercase tracking-[0.25em] text-pink-500">{eyebrow}</p>
         <h2 className="mt-3 max-w-4xl text-4xl font-black tracking-tight text-zinc-900 md:text-6xl">
@@ -368,103 +300,194 @@ function PageShell({ eyebrow, title, description, children }) {
 }
 
 function BranchesPage() {
+  const branchPins = [
+    {
+      city: "Tlaxcala",
+      address: "Revolución 17, San Buenaventura Atempa, Tlaxcala",
+      top: "56%",
+      left: "63%",
+      bg: "linear-gradient(180deg, #f6d8ff 0%, #d8f2ff 100%)",
+    },
+    {
+      city: "El Carmen",
+      address: "El Carmen",
+      top: "58%",
+      left: "61%",
+      bg: "linear-gradient(180deg, #fff1b8 0%, #ffd5c6 100%)",
+    },
+    {
+      city: "Oaxaca Centro",
+      address: "Oaxaca Centro",
+      top: "68%",
+      left: "57%",
+      bg: "linear-gradient(180deg, #ffd8ea 0%, #d9e8ff 100%)",
+    },
+    {
+      city: "Puebla",
+      address: "Blvrd Circunvalación 1039, Jardines de San Manuel, 72570 Heroica Puebla de Zaragoza, Pue.",
+      top: "60%",
+      left: "62%",
+      bg: "linear-gradient(180deg, #d7f5ff 0%, #e6d7ff 100%)",
+    },
+    {
+      city: "San Francisco Telixtlahuaca",
+      address: "San Francisco Telixtlahuaca, Oaxaca",
+      top: "66%",
+      left: "55%",
+      bg: "linear-gradient(180deg, #ffe3f1 0%, #fff1c7 100%)",
+    },
+  ];
+
   return (
-    <PageShell
-      eyebrow="Sucursales"
-      title="Cada sucursal debe sentirse como parte del universo Crep!simo"
-      description="Esta página puede enfocarse en mostrar ubicaciones, fotos reales, mapa, horarios, productos estrella y experiencia visual de cada punto de venta."
-    >
-      <div className="grid gap-6 md:grid-cols-3">
-        {branches.map((branch, index) => (
-          <div key={branch.city} className="overflow-hidden rounded-[2rem] bg-white shadow-sm ring-1 ring-pink-100">
-            <div
-              className="h-56"
-              style={{
-                background:
-                  index === 0
-                    ? "linear-gradient(135deg, #7fd3f4 0%, #ffd1e6 48%, #b9a6d9 100%)"
-                    : index === 1
-                      ? "linear-gradient(135deg, #ffe27a 0%, #ff8a66 40%, #7fd3f4 100%)"
-                      : "linear-gradient(135deg, #ffd1e6 0%, #f2bbd7 35%, #7fd3f4 100%)",
-              }}
-            />
-            <div className="p-6">
-              <p className="text-sm font-semibold uppercase tracking-[0.2em] text-zinc-500">{branch.subtitle}</p>
-              <h3 className="mt-2 text-3xl font-black text-zinc-900">{branch.city}</h3>
-              <p className="mt-3 text-sm leading-7 text-zinc-600">{branch.text}</p>
-            </div>
-          </div>
-        ))}
+    <div className="relative min-h-screen overflow-hidden bg-[#bfe9ff] px-6 pb-24 pt-28 md:px-10">
+      <div className="mx-auto max-w-6xl text-center">
+        <h1
+          className="text-6xl font-black tracking-tight text-white drop-shadow-[0_8px_35px_rgba(0,0,0,0.15)] md:text-8xl"
+          style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}
+        >
+          Crep!simo
+        </h1>
+        <p className="mt-2 text-base font-semibold uppercase tracking-[0.45em] text-white md:text-xl">
+          Sucursales
+        </p>
       </div>
-    </PageShell>
+
+      <div className="mx-auto mt-12 max-w-6xl">
+        <div className="relative mx-auto w-full max-w-4xl">
+          <img
+            src="/mexico-estados.svg"
+            alt="Mapa de México con nombres de estados"
+            className="mx-auto w-full max-w-[900px] opacity-40"
+          />
+
+          {branchPins.map((branch) => (
+            <div
+              key={branch.city}
+              className="absolute -translate-x-1/2 -translate-y-1/2"
+              style={{ top: branch.top, left: branch.left }}
+            >
+              <div className="relative">
+                <div className="h-5 w-5 rounded-full bg-red-500 shadow-[0_0_0_6px_rgba(255,255,255,0.35)]" />
+                <div className="absolute left-1/2 top-3 h-4 w-4 -translate-x-1/2 rotate-45 bg-red-500" />
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-14 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+          {branchPins.map((branch, index) => (
+            <motion.article
+              key={branch.city}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: index * 0.06 }}
+              whileHover={{ y: -6, scale: 1.01, rotate: index % 2 === 0 ? -1 : 1 }}
+              className="overflow-hidden rounded-[2.2rem] shadow-[0_20px_60px_rgba(0,0,0,0.08)]"
+              style={{ background: branch.bg }}
+            >
+              <div className="relative h-48 overflow-hidden">
+                <div className="absolute inset-0 bg-white/20" />
+                <div className="absolute -right-6 -top-6 h-28 w-28 rounded-full bg-white/30 blur-md" />
+                <div className="absolute left-5 top-5 flex items-center gap-2 rounded-full bg-white/75 px-4 py-2 text-xs font-bold uppercase tracking-[0.2em] text-zinc-700">
+                  <span className="h-3 w-3 rounded-full bg-red-500" />
+                  Sucursal
+                </div>
+                <div className="absolute bottom-5 left-5 right-5">
+                  <h3
+                    className="text-4xl font-black leading-none text-zinc-900"
+                    style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}
+                  >
+                    {branch.city}
+                  </h3>
+                </div>
+              </div>
+
+              <div className="bg-white/55 p-6 backdrop-blur-sm">
+                <p className="text-sm font-semibold leading-6 text-zinc-700">
+                  {branch.address}
+                </p>
+              </div>
+            </motion.article>
+          ))}
+        </div>
+      </div>
+    </div>
   );
 }
 
 function FranchisePage() {
   return (
-    <PageShell
-      eyebrow="Franquicia"
-      title="La web debe vender la marca como una experiencia y como una inversión"
-      description="Aquí conviene presentar el concepto, la propuesta de valor, el perfil ideal del franquiciatario y el proceso para abrir una sucursal."
-    >
-      <div className="grid gap-6 lg:grid-cols-[1.05fr_0.95fr]">
-        <div className="rounded-[2rem] bg-gradient-to-br from-[#ff9bcf] via-[#f5b6de] to-[#ffddee] p-8 shadow-xl">
-          <h3 className="text-3xl font-black text-white">¿Por qué Crep!simo?</h3>
-          <div className="mt-6 grid gap-4 text-sm text-white/95">
-            <div className="rounded-[1.5rem] bg-white/20 p-5 backdrop-blur">Identidad visual muy reconocible</div>
-            <div className="rounded-[1.5rem] bg-white/20 p-5 backdrop-blur">Concepto atractivo para redes y consumo joven</div>
-            <div className="rounded-[1.5rem] bg-white/20 p-5 backdrop-blur">Modelo adaptable a sucursal o isla comercial</div>
-            <div className="rounded-[1.5rem] bg-white/20 p-5 backdrop-blur">Posibilidad de vender productos propios de la marca</div>
-          </div>
+    <div className="relative min-h-screen overflow-hidden bg-[#cfefff] px-6 pb-20 pt-32 md:px-10">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.55),transparent_38%)]" />
+      <div className="absolute inset-x-0 top-0 h-56 overflow-hidden opacity-90">
+        <svg viewBox="0 0 1440 260" className="h-full w-full" preserveAspectRatio="none">
+          <path
+            d="M0 42 C180 18, 340 82, 500 48 C660 14, 820 82, 980 48 C1140 14, 1300 74, 1440 42 L1440 0 L0 0 Z"
+            fill="#ffe27a"
+          />
+          <path
+            d="M0 74 C160 44, 322 104, 484 76 C646 48, 804 110, 966 80 C1128 50, 1288 106, 1440 78 L1440 0 L0 0 Z"
+            fill="#ff8a66"
+            opacity="0.96"
+          />
+          <path
+            d="M0 28 C210 0, 390 66, 572 38 C754 10, 936 68, 1118 38 C1288 10, 1388 40, 1440 28 L1440 0 L0 0 Z"
+            fill="#c8b6ff"
+            opacity="0.98"
+          />
+        </svg>
+      </div>
+
+      <div className="relative mx-auto max-w-7xl">
+        <div className="text-center">
+          <p className="text-sm font-bold uppercase tracking-[0.28em] text-sky-700">Sucursales</p>
+          <h1
+            className="mt-4 text-5xl font-black tracking-tight text-white drop-shadow-[0_8px_30px_rgba(0,0,0,0.12)] md:text-7xl"
+            style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}
+          >
+            Crep!simo
+          </h1>
+          <p className="mt-3 text-sm font-semibold uppercase tracking-[0.45em] text-white md:text-xl">
+            Sucursales
+          </p>
+          <p className="mx-auto mt-8 max-w-3xl text-base leading-8 text-sky-900/75 md:text-lg">
+            Descubre dónde vive Crep!simo. Cada sucursal forma parte del mismo universo visual, alegre y colorido de la marca.
+          </p>
         </div>
 
-        <div className="space-y-4">
-          {["Conoce el modelo", "Recibe la información comercial", "Evalúa ubicación", "Abre tu sucursal"].map((item, i) => (
-            <div key={item} className="flex gap-4 rounded-[1.5rem] bg-white p-5 shadow-sm ring-1 ring-zinc-100">
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-sky-100 text-lg font-black text-sky-600">
-                {i + 1}
+        <div className="mt-14 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+          {branches.map((branch, index) => (
+            <article
+              key={branch.city}
+              className="overflow-hidden rounded-[2.2rem] bg-white/55 shadow-[0_20px_60px_rgba(0,0,0,0.08)] ring-1 ring-white/70 backdrop-blur-sm"
+            >
+              <div
+                className="relative h-44 overflow-hidden"
+                style={{
+                  background:
+                    index % 3 === 0
+                      ? "linear-gradient(135deg, #7fd3f4 0%, #c8b6ff 52%, #ffe27a 100%)"
+                      : index % 3 === 1
+                        ? "linear-gradient(135deg, #ffe27a 0%, #ff8a66 42%, #7fd3f4 100%)"
+                        : "linear-gradient(135deg, #c8b6ff 0%, #7fd3f4 52%, #ffd1e6 100%)",
+                }}
+              >
+                <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-white/25 to-transparent" />
+                <div className="absolute left-5 top-5 rounded-full bg-white/75 px-4 py-2 text-xs font-bold uppercase tracking-[0.2em] text-zinc-700 backdrop-blur-sm">
+                  {branch.subtitle}
+                </div>
               </div>
-              <div>
-                <h4 className="text-lg font-black text-zinc-900">{item}</h4>
-                <p className="mt-1 text-sm leading-7 text-zinc-600">
-                  Aquí se puede ampliar con inversión estimada, soporte operativo, tiempos de apertura y formulario para prospectos.
-                </p>
+
+              <div className="p-6">
+                <h3 className="text-3xl font-black tracking-tight text-zinc-900">{branch.city}</h3>
+                <p className="mt-3 text-sm font-semibold leading-6 text-sky-700">{branch.address}</p>
+                <p className="mt-4 text-sm leading-7 text-zinc-600">{branch.text}</p>
               </div>
-            </div>
+            </article>
           ))}
         </div>
       </div>
-    </PageShell>
-  );
-}
-
-function ConcentratesPage() {
-  return (
-    <PageShell
-      eyebrow="Concentrados"
-      title="Los concentrados merecen una página propia, más comercial y orientada a venta"
-      description="Esta sección puede funcionar como catálogo, presentación de producto y canal para mayoreo, distribuidores o negocios interesados."
-    >
-      <div className="grid gap-6 md:grid-cols-3">
-        {concentrates.map((item, index) => (
-          <div key={item.title} className="rounded-[2rem] bg-white p-6 shadow-sm ring-1 ring-zinc-100">
-            <div
-              className="mb-5 h-40 rounded-[1.5rem]"
-              style={{
-                background:
-                  index === 0
-                    ? "linear-gradient(135deg, #ffe27a 0%, #f8d878 100%)"
-                    : index === 1
-                      ? "linear-gradient(135deg, #7fd3f4 0%, #9ddbf2 100%)"
-                      : "linear-gradient(135deg, #ffd1e6 0%, #ffd8ea 100%)",
-              }}
-            />
-            <h3 className="text-2xl font-black text-zinc-900">{item.title}</h3>
-            <p className="mt-3 text-sm leading-7 text-zinc-600">{item.text}</p>
-          </div>
-        ))}
-      </div>
-    </PageShell>
+    </div>
   );
 }
 
@@ -482,8 +505,12 @@ function ContactPage() {
             Ideal para prospectos interesados en franquicia, colaboración comercial o compra de concentrados.
           </p>
           <div className="mt-8 flex flex-wrap gap-4">
-            <button className="rounded-full bg-pink-500 px-6 py-3 text-sm font-bold text-white">WhatsApp</button>
-            <button className="rounded-full border border-zinc-300 px-6 py-3 text-sm font-bold text-zinc-900">Solicitar información</button>
+            <button className="rounded-full bg-pink-500 px-6 py-3 text-sm font-bold text-white">
+              WhatsApp
+            </button>
+            <button className="rounded-full border border-zinc-300 px-6 py-3 text-sm font-bold text-zinc-900">
+              Solicitar información
+            </button>
           </div>
         </div>
 
@@ -520,7 +547,7 @@ export default function CrepisimoWebsiteConcept() {
           exit={{ opacity: 0, y: -18 }}
           transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
         >
-          {page === "inicio" && <HomePage setPage={setPage} />}
+          {page === "inicio" && <HomePage />}
           {page === "sucursales" && <BranchesPage />}
           {page === "franquicia" && <FranchisePage />}
           {page === "concentrados" && <ConcentratesPage />}
