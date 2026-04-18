@@ -109,6 +109,12 @@ const concentrates = [
   },
 ];
 
+function BrandLogo({ variant = "main", className = "" }) {
+  const src = variant === "header" ? "/Logo_minimo.png" : "/Logo.png";
+
+  return <img src={src} alt="Crep!simo" className={className} />;
+}
+
 function LiquidDrips() {
   const [isMobile, setIsMobile] = useState(false);
 
@@ -232,73 +238,71 @@ function Header({ page, setPage }) {
   return (
     <header className="fixed left-0 right-0 top-0 z-50 px-4 pt-4 md:px-8">
       <div
-        className="mx-auto max-w-7xl rounded-full px-4 py-3 shadow-lg"
+        className="mx-auto flex max-w-7xl items-center justify-between rounded-full px-5 py-3 shadow-lg"
         style={{
           border: `1px solid ${palette.morado.light}`,
           backgroundColor: "rgba(255,255,255,0.82)",
         }}
       >
-        <div className="flex items-center justify-between">
-          <button
-            onClick={() => setPage("inicio")}
-            className="text-left text-xl font-black tracking-tight"
-            style={{ color: palette.morado.main }}
-          >
-            Crep!simo
-          </button>
+        <button
+          onClick={() => setPage("inicio")}
+          className="flex items-center"
+          aria-label="Ir al inicio"
+        >
+          <BrandLogo variant="header" className="h-8 w-auto md:h-9" />
+        </button>
 
-          <button
-            onClick={() => setOpen(!open)}
-            className="flex h-10 w-10 items-center justify-center md:hidden"
-            style={{ color: palette.morado.main }}
-          >
-            <AnimatePresence mode="wait">
-              {open ? (
-                <motion.div
-                  key="close"
-                  initial={{ opacity: 0, scale: 0.6, rotate: -90 }}
-                  animate={{ opacity: 1, scale: 1, rotate: 0 }}
-                  exit={{ opacity: 0, scale: 0.6, rotate: 90 }}
-                  transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-                >
-                  <X size={22} />
-                </motion.div>
-              ) : (
-                <motion.div
-                  key="menu"
-                  initial={{ opacity: 0, scale: 0.6, rotate: 90 }}
-                  animate={{ opacity: 1, scale: 1, rotate: 0 }}
-                  exit={{ opacity: 0, scale: 0.6, rotate: -90 }}
-                  transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-                >
-                  <Menu size={22} />
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </button>
-
-          <nav className="hidden items-center gap-2 md:flex">
-            {navItems.map((item) => (
-              <button
-                key={item.id}
-                onClick={() => setPage(item.id)}
-                className="rounded-full px-4 py-2 text-sm font-semibold transition"
-                style={
-                  page === item.id
-                    ? {
-                        backgroundColor: palette.morado.light,
-                        color: palette.neutrals.dark,
-                      }
-                    : {
-                        color: palette.neutrals.text,
-                      }
-                }
+        <button
+          onClick={() => setOpen(!open)}
+          className="flex h-10 w-10 items-center justify-center md:hidden"
+          style={{ color: palette.morado.main }}
+        >
+          <AnimatePresence mode="wait">
+            {open ? (
+              <motion.div
+                key="close"
+                initial={{ opacity: 0, scale: 0.6, rotate: -90 }}
+                animate={{ opacity: 1, scale: 1, rotate: 0 }}
+                exit={{ opacity: 0, scale: 0.6, rotate: 90 }}
+                transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
               >
-                {item.label}
-              </button>
-            ))}
-          </nav>
-        </div>
+                <X size={22} />
+              </motion.div>
+            ) : (
+              <motion.div
+                key="menu"
+                initial={{ opacity: 0, scale: 0.6, rotate: 90 }}
+                animate={{ opacity: 1, scale: 1, rotate: 0 }}
+                exit={{ opacity: 0, scale: 0.6, rotate: -90 }}
+                transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+              >
+                <Menu size={22} />
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </button>
+
+        <nav className="hidden items-center gap-2 md:flex">
+          {navItems.map((item) => (
+            <button
+              key={item.id}
+              onClick={() => setPage(item.id)}
+              className="rounded-full px-4 py-2 text-sm font-semibold transition"
+              style={
+                page === item.id
+                  ? {
+                      backgroundColor: palette.morado.light,
+                      color: palette.neutrals.dark,
+                    }
+                  : {
+                      color: palette.neutrals.text,
+                    }
+              }
+            >
+              {item.label}
+            </button>
+          ))}
+        </nav>
       </div>
 
       <AnimatePresence>
@@ -379,23 +383,25 @@ function HomePage() {
             transition={{ duration: 1.15, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
             className="max-w-5xl"
           >
-            <motion.h1
+            <motion.div
               initial={{ y: -40 }}
               animate={{ y: 0 }}
               transition={{ duration: 1.3, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-              className="text-6xl font-black tracking-tight text-white drop-shadow-[0_8px_35px_rgba(0,0,0,0.16)] sm:text-7xl md:text-8xl lg:text-[8.5rem]"
-              style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}
+              className="flex justify-center"
             >
-              Crep!simo
-            </motion.h1>
+              <BrandLogo
+                variant="main"
+                className="w-[240px] drop-shadow-[0_8px_35px_rgba(0,0,0,0.16)] sm:w-[320px] md:w-[420px] lg:w-[500px]"
+              />
+            </motion.div>
 
             <motion.p
               initial={{ y: 18, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ duration: 0.9, delay: 0.85 }}
-              className="mt-3 text-base font-semibold uppercase tracking-[0.45em] text-white md:text-xl"
+              className="mt-4 text-base font-semibold uppercase tracking-[0.45em] text-white md:text-xl"
             >
-              Creperías
+              
             </motion.p>
           </motion.div>
         </div>
@@ -501,21 +507,19 @@ function BranchesPage() {
       style={{ backgroundColor: palette.azul.soft }}
     >
       <div className="mx-auto max-w-6xl text-center">
-        <h1
-          className="text-6xl font-black tracking-tight text-white drop-shadow-[0_8px_35px_rgba(0,0,0,0.15)] md:text-8xl"
-          style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}
-        >
-          Crep!simo
-        </h1>
-        <p className="mt-2 text-base font-semibold uppercase tracking-[0.45em] text-white md:text-xl">
-          Sucursales
+        <BrandLogo
+          variant="main"
+          className="mx-auto w-[220px] drop-shadow-[0_8px_35px_rgba(0,0,0,0.15)] md:w-[340px]"
+        />
+        <p className="mt-3 text-base font-semibold uppercase tracking-[0.45em] text-white md:text-xl">
+          
         </p>
       </div>
 
       <div className="mx-auto mt-12 max-w-6xl">
         <div className="relative mx-auto w-full max-w-4xl">
           <img
-            src="/mexico-estados.svg"
+            src="mx.svg"
             alt="Mapa de México con nombres de estados"
             className="mx-auto w-full max-w-[900px] opacity-40"
           />
@@ -616,17 +620,20 @@ function FranchisePage() {
             className="text-sm font-bold uppercase tracking-[0.28em]"
             style={{ color: palette.morado.main }}
           >
-            Franquicia
+            
           </p>
-          <h1
-            className="mt-4 text-5xl font-black tracking-tight text-white drop-shadow-[0_8px_30px_rgba(0,0,0,0.12)] md:text-7xl"
-            style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}
-          >
-            Crep!simo
-          </h1>
+
+          <div className="mt-4 flex justify-center">
+            <BrandLogo
+              variant="main"
+              className="w-[220px] drop-shadow-[0_8px_30px_rgba(0,0,0,0.12)] md:w-[340px]"
+            />
+          </div>
+
           <p className="mt-3 text-sm font-semibold uppercase tracking-[0.45em] text-white md:text-xl">
             Expansión
           </p>
+
           <p
             className="mx-auto mt-8 max-w-3xl text-base leading-8 md:text-lg"
             style={{ color: palette.neutrals.text }}
@@ -683,6 +690,10 @@ function ConcentratesPage() {
       title="Una línea de producto que también comunica marca"
       description="La sección de concentrados puede vender el producto, mostrar sus aplicaciones y reforzar la estética propia de Crep!simo con una presentación visual clara y atractiva."
     >
+      <div className="mb-10 flex justify-center">
+        <BrandLogo variant="main" className="w-[180px] md:w-[260px]" />
+      </div>
+
       <div className="grid gap-6 md:grid-cols-3">
         {concentrates.map((item, index) => (
           <motion.article
@@ -724,6 +735,10 @@ function ContactPage() {
       title="La última página debe convertir la atención en una acción"
       description="Aquí irían los botones reales a WhatsApp, formulario para franquicias, solicitudes de mayoreo y enlaces a redes sociales."
     >
+      <div className="mb-10 flex justify-center">
+        <BrandLogo variant="main" className="w-[180px] md:w-[260px]" />
+      </div>
+
       <div className="grid gap-6 md:grid-cols-2">
         <div className="rounded-[2rem] bg-white p-8 shadow-sm ring-1 ring-zinc-100">
           <h3 className="text-2xl font-black text-zinc-900">Contacto comercial</h3>
