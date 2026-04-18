@@ -2,6 +2,40 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 
+const palette = {
+  morado: {
+    main: "#7936AD",
+    soft: "#E3CAFF",
+    light: "#EFE3FF",
+  },
+  naranja: {
+    main: "#D34633",
+    soft: "#FFC5BD",
+    light: "#FFDCDC",
+  },
+  rosa: {
+    main: "#E172B3",
+    soft: "#FFCAEB",
+    light: "#FFD9EE",
+  },
+  azul: {
+    main: "#52ABD8",
+    soft: "#C3E9FC",
+    light: "#E1F8FF",
+  },
+  amarillo: {
+    main: "#EFC42E",
+    soft: "#FFF2CF",
+    light: "#FFF2E1",
+  },
+  neutrals: {
+    pagePink: "#FFF6FB",
+    pageSoft: "#FFF8FC",
+    dark: "#2F2235",
+    text: "#5C4B66",
+    white: "#FFFFFF",
+  },
+};
 
 const navItems = [
   { id: "inicio", label: "Inicio" },
@@ -15,36 +49,47 @@ const branches = [
   {
     city: "Tlaxcala",
     address: "Revolución 17, San Buenaventura Atempa, Tlaxcala",
+    subtitle: "Sucursal activa",
+    text: "Una presencia que refuerza la identidad visual y la expansión regional de la marca.",
   },
   {
     city: "El Carmen",
     address: "El Carmen",
+    subtitle: "Sucursal activa",
+    text: "Punto clave para mantener una experiencia de marca reconocible, cálida y consistente.",
   },
   {
     city: "Oaxaca Centro",
     address: "Oaxaca Centro",
+    subtitle: "Sucursal activa",
+    text: "Ubicación ideal para proyectar a Crep!simo como una propuesta fresca y memorable.",
   },
   {
     city: "Puebla",
-    address: "Blvrd Circunvalación 1039, Jardines de San Manuel, 72570 Heroica Puebla de Zaragoza, Pue.",
+    address:
+      "Blvrd Circunvalación 1039, Jardines de San Manuel, 72570 Heroica Puebla de Zaragoza, Pue.",
+    subtitle: "Sucursal activa",
+    text: "Una sede estratégica para fortalecer visibilidad, posicionamiento y crecimiento comercial.",
   },
   {
     city: "San Francisco Telixtlahuaca",
     address: "San Francisco Telixtlahuaca, Oaxaca",
+    subtitle: "Sucursal activa",
+    text: "Una sucursal que aporta cercanía, identidad local y continuidad a la experiencia Crep!simo.",
   },
 ];
 
 const featuredPhotos = [
   {
-    
+    title: "El Carmen",
     image: "/el carmen.png",
   },
   {
-    
+    title: "Bebidas",
     image: "/bebida.png",
   },
   {
-    
+    title: "Promociones",
     image: "/promo.png",
   },
 ];
@@ -76,7 +121,7 @@ function LiquidDrips() {
 
   const layers = [
     {
-      color: "#ff57b3",
+      color: palette.rosa.main,
       height: 520,
       duration: 20,
       delay: 0,
@@ -87,7 +132,7 @@ function LiquidDrips() {
         "M0 50 C180 10, 340 80, 500 50 C660 20, 820 80, 980 50 C1140 20, 1300 80, 1440 50 L1440 348 C1362 402, 1270 434, 1174 398 C1074 362, 1012 278, 914 278 C814 278, 748 382, 646 400 C542 418, 476 316, 374 316 C276 316, 212 422, 112 440 C44 452, 0 410, 0 394 Z",
     },
     {
-      color: "#c7a6ff",
+      color: palette.morado.main,
       height: 420,
       duration: 26,
       delay: 2.2,
@@ -98,7 +143,7 @@ function LiquidDrips() {
         "M0 54 C150 20, 310 76, 470 54 C630 32, 790 78, 950 54 C1110 30, 1270 78, 1440 54 L1440 0 C1386 10, 1326 34, 1266 66 C1204 98, 1142 134, 1080 174 C1016 214, 956 262, 896 292 C836 322, 774 340, 712 326 C652 312, 606 278, 550 278 C490 278, 448 324, 390 340 C332 356, 286 330, 230 314 C174 298, 128 316, 82 344 C36 372, 10 386, 0 396 Z",
     },
     {
-      color: "#58cfff",
+      color: palette.azul.main,
       height: 360,
       duration: 16,
       delay: 1.2,
@@ -110,7 +155,7 @@ function LiquidDrips() {
         "M0 60 C200 20, 380 90, 560 60 C740 30, 920 90, 1100 60 C1280 30, 1400 80, 1440 70 L1440 310 C1362 350, 1230 390, 1102 350 C974 310, 900 260, 782 260 C664 260, 584 350, 468 370 C350 390, 270 310, 154 310 C62 310, 4 340, 0 350 Z",
     },
     {
-      color: "#ffd84d",
+      color: palette.amarillo.main,
       height: 650,
       duration: 24,
       delay: 5.5,
@@ -124,7 +169,10 @@ function LiquidDrips() {
   ];
 
   return (
-    <div className="absolute inset-0 overflow-hidden bg-[#f2bbd7]">
+    <div
+      className="absolute inset-0 overflow-hidden"
+      style={{ backgroundColor: palette.rosa.soft }}
+    >
       {layers.map((layer, i) => (
         <motion.div
           key={i}
@@ -132,7 +180,7 @@ function LiquidDrips() {
           style={{
             top: 0,
             height: isMobile ? layer.height * 0.82 : layer.height,
-            zIndex: layer.color === "#ffd84d" ? 1 : i + 2,
+            zIndex: layer.color === palette.amarillo.main ? 1 : i + 2,
             opacity: layer.opacity,
             transform: layer.tilt ? "skewX(-8deg) rotate(-1.5deg)" : "none",
             transformOrigin: "top left",
@@ -149,7 +197,7 @@ function LiquidDrips() {
             delay: layer.delay,
             repeat: Infinity,
             repeatType: "mirror",
-            ease: [0.42, 0, 0.22, 1],
+            ease: "easeInOut",
           }}
         >
           <svg
@@ -160,13 +208,15 @@ function LiquidDrips() {
             <motion.path
               fill={layer.color}
               initial={{ d: layer.pathA }}
-              animate={{ d: [layer.pathA, layer.pathB, layer.pathA] }}
+              animate={{
+                d: [layer.pathA, layer.pathB, layer.pathA],
+              }}
               transition={{
                 duration: layer.duration,
                 delay: layer.delay,
                 repeat: Infinity,
                 repeatType: "mirror",
-                ease: [0.42, 0, 0.22, 1],
+                ease: "easeInOut",
               }}
             />
           </svg>
@@ -176,63 +226,73 @@ function LiquidDrips() {
   );
 }
 
-
 function Header({ page, setPage }) {
   const [open, setOpen] = useState(false);
 
   return (
     <header className="fixed left-0 right-0 top-0 z-50 px-4 pt-4 md:px-8">
-      <div className="mx-auto max-w-7xl rounded-full border border-white/40 bg-white/85 px-4 py-3 shadow-lg">
+      <div
+        className="mx-auto max-w-7xl rounded-full px-4 py-3 shadow-lg"
+        style={{
+          border: `1px solid ${palette.morado.light}`,
+          backgroundColor: "rgba(255,255,255,0.82)",
+        }}
+      >
         <div className="flex items-center justify-between">
-          {/* LOGO */}
           <button
             onClick={() => setPage("inicio")}
-            className="text-left text-xl font-black tracking-tight text-zinc-900"
+            className="text-left text-xl font-black tracking-tight"
+            style={{ color: palette.morado.main }}
           >
             Crep!simo
           </button>
 
-          {/* BOTÓN HAMBURGUESA (solo móvil) */}
           <button
-              onClick={() => setOpen(!open)}
-              className="flex h-10 w-10 items-center justify-center md:hidden"
-            >
-              <AnimatePresence mode="wait">
-                {open ? (
-                  <motion.div
-                    key="close"
-                    initial={{ opacity: 0, scale: 0.6, rotate: -90 }}
-                    animate={{ opacity: 1, scale: 1, rotate: 0 }}
-                    exit={{ opacity: 0, scale: 0.6, rotate: 90 }}
-                    transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-                  >
-                    <X size={22} />
-                  </motion.div>
-                ) : (
-                  <motion.div
-                    key="menu"
-                    initial={{ opacity: 0, scale: 0.6, rotate: 90 }}
-                    animate={{ opacity: 1, scale: 1, rotate: 0 }}
-                    exit={{ opacity: 0, scale: 0.6, rotate: -90 }}
-                    transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-                  >
-                    <Menu size={22} />
-                  </motion.div>
-                )}
-              </AnimatePresence>
+            onClick={() => setOpen(!open)}
+            className="flex h-10 w-10 items-center justify-center md:hidden"
+            style={{ color: palette.morado.main }}
+          >
+            <AnimatePresence mode="wait">
+              {open ? (
+                <motion.div
+                  key="close"
+                  initial={{ opacity: 0, scale: 0.6, rotate: -90 }}
+                  animate={{ opacity: 1, scale: 1, rotate: 0 }}
+                  exit={{ opacity: 0, scale: 0.6, rotate: 90 }}
+                  transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                >
+                  <X size={22} />
+                </motion.div>
+              ) : (
+                <motion.div
+                  key="menu"
+                  initial={{ opacity: 0, scale: 0.6, rotate: 90 }}
+                  animate={{ opacity: 1, scale: 1, rotate: 0 }}
+                  exit={{ opacity: 0, scale: 0.6, rotate: -90 }}
+                  transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                >
+                  <Menu size={22} />
+                </motion.div>
+              )}
+            </AnimatePresence>
           </button>
 
-          {/* MENU DESKTOP (igual que antes) */}
           <nav className="hidden items-center gap-2 md:flex">
             {navItems.map((item) => (
               <button
                 key={item.id}
                 onClick={() => setPage(item.id)}
-                className={`rounded-full px-4 py-2 text-sm font-semibold transition ${
+                className="rounded-full px-4 py-2 text-sm font-semibold transition"
+                style={
                   page === item.id
-                    ? "bg-white text-zinc-900"
-                    : "text-zinc-700 hover:bg-white/40"
-                }`}
+                    ? {
+                        backgroundColor: palette.morado.light,
+                        color: palette.neutrals.dark,
+                      }
+                    : {
+                        color: palette.neutrals.text,
+                      }
+                }
               >
                 {item.label}
               </button>
@@ -241,14 +301,17 @@ function Header({ page, setPage }) {
         </div>
       </div>
 
-      {/* MENU DESPLEGABLE */}
       <AnimatePresence>
         {open && (
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            className="mx-auto mt-3 max-w-7xl rounded-[2rem] border border-white/40 bg-white/90 p-4 shadow-lg md:hidden"
+            className="mx-auto mt-3 max-w-7xl rounded-[2rem] p-4 shadow-lg md:hidden"
+            style={{
+              border: `1px solid ${palette.morado.light}`,
+              backgroundColor: "rgba(255,255,255,0.9)",
+            }}
           >
             <nav className="flex flex-col gap-2">
               {navItems.map((item) => (
@@ -258,11 +321,17 @@ function Header({ page, setPage }) {
                     setPage(item.id);
                     setOpen(false);
                   }}
-                  className={`rounded-full px-4 py-3 text-left text-sm font-semibold transition ${
+                  className="rounded-full px-4 py-3 text-left text-sm font-semibold transition"
+                  style={
                     page === item.id
-                      ? "bg-white text-zinc-900"
-                      : "text-zinc-700 hover:bg-white/40"
-                  }`}
+                      ? {
+                          backgroundColor: palette.morado.light,
+                          color: palette.neutrals.dark,
+                        }
+                      : {
+                          color: palette.neutrals.text,
+                        }
+                  }
                 >
                   {item.label}
                 </button>
@@ -299,7 +368,7 @@ function FeaturedPhotoCard({ item }) {
 
 function HomePage() {
   return (
-    <div className="relative bg-[#f2bbd7]">
+    <div className="relative" style={{ backgroundColor: palette.rosa.soft }}>
       <section className="relative flex min-h-[88vh] flex-col items-center justify-center overflow-hidden px-6 pt-24 text-center">
         <LiquidDrips />
 
@@ -348,20 +417,38 @@ function HomePage() {
         </div>
       </section>
 
-      <div className="h-24 bg-gradient-to-b from-[#f2bbd7] to-[#fff8fc]" />
+      <div
+        className="h-24"
+        style={{
+          background: `linear-gradient(to bottom, ${palette.rosa.soft}, ${palette.neutrals.pageSoft})`,
+        }}
+      />
     </div>
   );
 }
 
 function PageShell({ eyebrow, title, description, children }) {
   return (
-    <div className="min-h-screen bg-[#fff6fb] px-6 pb-16 pt-32 md:px-10">
+    <div
+      className="min-h-screen px-6 pb-16 pt-32 md:px-10"
+      style={{ backgroundColor: palette.neutrals.pagePink }}
+    >
       <div className="mx-auto max-w-7xl">
-        <p className="text-sm font-bold uppercase tracking-[0.25em] text-pink-500">{eyebrow}</p>
+        <p
+          className="text-sm font-bold uppercase tracking-[0.25em]"
+          style={{ color: palette.rosa.main }}
+        >
+          {eyebrow}
+        </p>
         <h2 className="mt-3 max-w-4xl text-4xl font-black tracking-tight text-zinc-900 md:text-6xl">
           {title}
         </h2>
-        <p className="mt-5 max-w-3xl text-lg leading-8 text-zinc-600">{description}</p>
+        <p
+          className="mt-5 max-w-3xl text-lg leading-8"
+          style={{ color: palette.neutrals.text }}
+        >
+          {description}
+        </p>
         <div className="mt-12">{children}</div>
       </div>
     </div>
@@ -375,40 +462,44 @@ function BranchesPage() {
       address: "Revolución 17, San Buenaventura Atempa, Tlaxcala",
       top: "56%",
       left: "63%",
-      bg: "linear-gradient(180deg, #f6d8ff 0%, #d8f2ff 100%)",
+      bg: `linear-gradient(180deg, ${palette.rosa.soft} 0%, ${palette.azul.soft} 100%)`,
     },
     {
       city: "El Carmen",
       address: "El Carmen",
       top: "58%",
       left: "61%",
-      bg: "linear-gradient(180deg, #fff1b8 0%, #ffd5c6 100%)",
+      bg: `linear-gradient(180deg, ${palette.amarillo.soft} 0%, ${palette.naranja.soft} 100%)`,
     },
     {
       city: "Oaxaca Centro",
       address: "Oaxaca Centro",
       top: "68%",
       left: "57%",
-      bg: "linear-gradient(180deg, #ffd8ea 0%, #d9e8ff 100%)",
+      bg: `linear-gradient(180deg, ${palette.morado.light} 0%, ${palette.azul.light} 100%)`,
     },
     {
       city: "Puebla",
-      address: "Blvrd Circunvalación 1039, Jardines de San Manuel, 72570 Heroica Puebla de Zaragoza, Pue.",
+      address:
+        "Blvrd Circunvalación 1039, Jardines de San Manuel, 72570 Heroica Puebla de Zaragoza, Pue.",
       top: "60%",
       left: "62%",
-      bg: "linear-gradient(180deg, #d7f5ff 0%, #e6d7ff 100%)",
+      bg: `linear-gradient(180deg, ${palette.azul.light} 0%, ${palette.morado.light} 100%)`,
     },
     {
       city: "San Francisco Telixtlahuaca",
       address: "San Francisco Telixtlahuaca, Oaxaca",
       top: "66%",
       left: "55%",
-      bg: "linear-gradient(180deg, #ffe3f1 0%, #fff1c7 100%)",
+      bg: `linear-gradient(180deg, ${palette.naranja.light} 0%, ${palette.amarillo.soft} 100%)`,
     },
   ];
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-[#bfe9ff] px-6 pb-24 pt-28 md:px-10">
+    <div
+      className="relative min-h-screen overflow-hidden px-6 pb-24 pt-28 md:px-10"
+      style={{ backgroundColor: palette.azul.soft }}
+    >
       <div className="mx-auto max-w-6xl text-center">
         <h1
           className="text-6xl font-black tracking-tight text-white drop-shadow-[0_8px_35px_rgba(0,0,0,0.15)] md:text-8xl"
@@ -436,8 +527,14 @@ function BranchesPage() {
               style={{ top: branch.top, left: branch.left }}
             >
               <div className="relative">
-                <div className="h-5 w-5 rounded-full bg-red-500 shadow-[0_0_0_6px_rgba(255,255,255,0.35)]" />
-                <div className="absolute left-1/2 top-3 h-4 w-4 -translate-x-1/2 rotate-45 bg-red-500" />
+                <div
+                  className="h-5 w-5 rounded-full shadow-[0_0_0_6px_rgba(255,255,255,0.35)]"
+                  style={{ backgroundColor: palette.naranja.main }}
+                />
+                <div
+                  className="absolute left-1/2 top-3 h-4 w-4 -translate-x-1/2 rotate-45"
+                  style={{ backgroundColor: palette.naranja.main }}
+                />
               </div>
             </div>
           ))}
@@ -458,7 +555,10 @@ function BranchesPage() {
                 <div className="absolute inset-0 bg-white/20" />
                 <div className="absolute -right-6 -top-6 h-28 w-28 rounded-full bg-white/30 blur-md" />
                 <div className="absolute left-5 top-5 flex items-center gap-2 rounded-full bg-white/75 px-4 py-2 text-xs font-bold uppercase tracking-[0.2em] text-zinc-700">
-                  <span className="h-3 w-3 rounded-full bg-red-500" />
+                  <span
+                    className="h-3 w-3 rounded-full"
+                    style={{ backgroundColor: palette.naranja.main }}
+                  />
                   Sucursal
                 </div>
                 <div className="absolute bottom-5 left-5 right-5">
@@ -486,22 +586,25 @@ function BranchesPage() {
 
 function FranchisePage() {
   return (
-    <div className="relative min-h-screen overflow-hidden bg-[#cfefff] px-6 pb-20 pt-32 md:px-10">
+    <div
+      className="relative min-h-screen overflow-hidden px-6 pb-20 pt-32 md:px-10"
+      style={{ backgroundColor: palette.azul.light }}
+    >
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.55),transparent_38%)]" />
       <div className="absolute inset-x-0 top-0 h-56 overflow-hidden opacity-90">
         <svg viewBox="0 0 1440 260" className="h-full w-full" preserveAspectRatio="none">
           <path
             d="M0 42 C180 18, 340 82, 500 48 C660 14, 820 82, 980 48 C1140 14, 1300 74, 1440 42 L1440 0 L0 0 Z"
-            fill="#ffe27a"
+            fill={palette.amarillo.main}
           />
           <path
             d="M0 74 C160 44, 322 104, 484 76 C646 48, 804 110, 966 80 C1128 50, 1288 106, 1440 78 L1440 0 L0 0 Z"
-            fill="#ff8a66"
+            fill={palette.naranja.main}
             opacity="0.96"
           />
           <path
             d="M0 28 C210 0, 390 66, 572 38 C754 10, 936 68, 1118 38 C1288 10, 1388 40, 1440 28 L1440 0 L0 0 Z"
-            fill="#c8b6ff"
+            fill={palette.morado.soft}
             opacity="0.98"
           />
         </svg>
@@ -509,7 +612,12 @@ function FranchisePage() {
 
       <div className="relative mx-auto max-w-7xl">
         <div className="text-center">
-          <p className="text-sm font-bold uppercase tracking-[0.28em] text-sky-700">Sucursales</p>
+          <p
+            className="text-sm font-bold uppercase tracking-[0.28em]"
+            style={{ color: palette.morado.main }}
+          >
+            Franquicia
+          </p>
           <h1
             className="mt-4 text-5xl font-black tracking-tight text-white drop-shadow-[0_8px_30px_rgba(0,0,0,0.12)] md:text-7xl"
             style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}
@@ -517,10 +625,13 @@ function FranchisePage() {
             Crep!simo
           </h1>
           <p className="mt-3 text-sm font-semibold uppercase tracking-[0.45em] text-white md:text-xl">
-            Sucursales
+            Expansión
           </p>
-          <p className="mx-auto mt-8 max-w-3xl text-base leading-8 text-sky-900/75 md:text-lg">
-            Descubre dónde vive Crep!simo. Cada sucursal forma parte del mismo universo visual, alegre y colorido de la marca.
+          <p
+            className="mx-auto mt-8 max-w-3xl text-base leading-8 md:text-lg"
+            style={{ color: palette.neutrals.text }}
+          >
+            Descubre cómo una franquicia Crep!simo puede proyectar una imagen fresca, cálida y memorable, con una identidad visual consistente y fácil de replicar.
           </p>
         </div>
 
@@ -535,10 +646,10 @@ function FranchisePage() {
                 style={{
                   background:
                     index % 3 === 0
-                      ? "linear-gradient(135deg, #7fd3f4 0%, #c8b6ff 52%, #ffe27a 100%)"
+                      ? `linear-gradient(135deg, ${palette.azul.main} 0%, ${palette.morado.soft} 52%, ${palette.amarillo.main} 100%)`
                       : index % 3 === 1
-                        ? "linear-gradient(135deg, #ffe27a 0%, #ff8a66 42%, #7fd3f4 100%)"
-                        : "linear-gradient(135deg, #c8b6ff 0%, #7fd3f4 52%, #ffd1e6 100%)",
+                      ? `linear-gradient(135deg, ${palette.amarillo.main} 0%, ${palette.naranja.main} 42%, ${palette.azul.soft} 100%)`
+                      : `linear-gradient(135deg, ${palette.morado.soft} 0%, ${palette.azul.main} 52%, ${palette.rosa.soft} 100%)`,
                 }}
               >
                 <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-white/25 to-transparent" />
@@ -549,7 +660,12 @@ function FranchisePage() {
 
               <div className="p-6">
                 <h3 className="text-3xl font-black tracking-tight text-zinc-900">{branch.city}</h3>
-                <p className="mt-3 text-sm font-semibold leading-6 text-sky-700">{branch.address}</p>
+                <p
+                  className="mt-3 text-sm font-semibold leading-6"
+                  style={{ color: palette.morado.main }}
+                >
+                  {branch.address}
+                </p>
                 <p className="mt-4 text-sm leading-7 text-zinc-600">{branch.text}</p>
               </div>
             </article>
@@ -557,6 +673,47 @@ function FranchisePage() {
         </div>
       </div>
     </div>
+  );
+}
+
+function ConcentratesPage() {
+  return (
+    <PageShell
+      eyebrow="Concentrados"
+      title="Una línea de producto que también comunica marca"
+      description="La sección de concentrados puede vender el producto, mostrar sus aplicaciones y reforzar la estética propia de Crep!simo con una presentación visual clara y atractiva."
+    >
+      <div className="grid gap-6 md:grid-cols-3">
+        {concentrates.map((item, index) => (
+          <motion.article
+            key={item.title}
+            initial={{ opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.35, delay: index * 0.08 }}
+            className="rounded-[2rem] p-8 shadow-[0_20px_50px_rgba(0,0,0,0.06)] ring-1 backdrop-blur-sm"
+            style={{
+              background:
+                index === 0
+                  ? `linear-gradient(180deg, ${palette.naranja.soft} 0%, ${palette.amarillo.soft} 100%)`
+                  : index === 1
+                  ? `linear-gradient(180deg, ${palette.azul.light} 0%, ${palette.morado.light} 100%)`
+                  : `linear-gradient(180deg, ${palette.rosa.soft} 0%, ${palette.naranja.light} 100%)`,
+              borderColor: "rgba(255,255,255,0.6)",
+            }}
+          >
+            <h3
+              className="text-2xl font-black"
+              style={{ color: palette.neutrals.dark }}
+            >
+              {item.title}
+            </h3>
+            <p className="mt-4 text-sm leading-7" style={{ color: palette.neutrals.text }}>
+              {item.text}
+            </p>
+          </motion.article>
+        ))}
+      </div>
+    </PageShell>
   );
 }
 
@@ -574,7 +731,10 @@ function ContactPage() {
             Ideal para prospectos interesados en franquicia, colaboración comercial o compra de concentrados.
           </p>
           <div className="mt-8 flex flex-wrap gap-4">
-            <button className="rounded-full bg-pink-500 px-6 py-3 text-sm font-bold text-white">
+            <button
+              className="rounded-full px-6 py-3 text-sm font-bold text-white"
+              style={{ backgroundColor: palette.rosa.main }}
+            >
               WhatsApp
             </button>
             <button className="rounded-full border border-zinc-300 px-6 py-3 text-sm font-bold text-zinc-900">
@@ -583,7 +743,10 @@ function ContactPage() {
           </div>
         </div>
 
-        <div className="rounded-[2rem] bg-[#59b7ea] p-8 text-white shadow-xl">
+        <div
+          className="rounded-[2rem] p-8 text-white shadow-xl"
+          style={{ backgroundColor: palette.azul.main }}
+        >
           <h3 className="text-2xl font-black">Redes y presencia digital</h3>
           <div className="mt-6 grid gap-4 text-sm leading-7 text-white/95">
             <div className="rounded-[1.5rem] bg-white/15 p-4">Instagram de la marca</div>
@@ -605,7 +768,10 @@ export default function CrepisimoWebsiteConcept() {
   }, [page]);
 
   return (
-    <div className="min-h-screen bg-[#fff8fc]">
+    <div
+      className="min-h-screen"
+      style={{ backgroundColor: palette.neutrals.pageSoft }}
+    >
       <Header page={page} setPage={setPage} />
 
       <AnimatePresence mode="wait">
