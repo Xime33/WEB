@@ -227,53 +227,68 @@ function LiquidDrips() {
       className="absolute inset-0 overflow-hidden"
       style={{ backgroundColor: palette.rosa.soft }}
     >
-      {layers.map((layer, i) => (
-        <motion.div
-          key={i}
-          className="absolute left-0 w-full"
-          style={{
-            top: 0,
-            height: isMobile ? layer.height * 0.82 : layer.height,
-            zIndex: layer.color === palette.amarillo.main ? 1 : i + 2,
-            opacity: layer.opacity,
-            transform: layer.tilt ? "skewX(-8deg) rotate(-1.5deg)" : "none",
-            transformOrigin: "top left",
-            overflow: "hidden",
-          }}
-          initial={{ y: -130 }}
-          animate={
-            layer.invertMotion
-              ? { y: [-20, -60, -30, -130] }
-              : { y: [-130, -20, -40, -30] }
-          }
-          transition={{
-            duration: layer.duration,
-            delay: layer.delay,
-            repeat: Infinity,
-            repeatType: "mirror",
-            ease: "easeInOut",
-          }}
-        >
-          <svg
-            viewBox="0 0 1440 600"
-            className="h-full w-full"
-            preserveAspectRatio="xMidYMid slice"
+        {layers.map((layer, i) => {
+        const isPurple = layer.color === palette.morado.main;
+
+        return (
+          <motion.div
+            key={i}
+            className="absolute left-0 w-full"
+            style={{
+              top: 0,
+              height: isMobile ? layer.height * 0.82 : layer.height,
+              zIndex:
+                layer.color === palette.amarillo.main
+                  ? 1
+                  : layer.color === palette.azul.main
+                  ? 3
+                  : layer.color === palette.rosa.main
+                  ? 2
+                  : layer.color === palette.morado.main
+                  ? 5
+                  : 4,
+              opacity: layer.opacity,
+              transform: layer.tilt ? "skewX(-8deg) rotate(-1.5deg)" : "none",
+              transformOrigin: "top left",
+              overflow: "hidden",
+            }}
+            initial={{ y: -170 }}
+            animate={
+              isPurple
+                ? { y: [-190, -130, -120, -90] }
+                : layer.invertMotion
+                ? { y: [-140, -10, -50, -20] }
+                : { y: [-130, -40, -130, -60] }
+            }
+            transition={{
+              duration: layer.duration,
+              delay: layer.delay,
+              repeat: Infinity,
+              repeatType: "mirror",
+              ease: "easeInOut",
+            }}
           >
-            <motion.path
-              fill={layer.color}
-              initial={{ d: layer.pathA }}
-              animate={{ d: [layer.pathA, layer.pathB, layer.pathA] }}
-              transition={{
-                duration: layer.duration,
-                delay: layer.delay,
-                repeat: Infinity,
-                repeatType: "mirror",
-                ease: "easeInOut",
-              }}
-            />
-          </svg>
-        </motion.div>
-      ))}
+            <svg
+              viewBox="0 0 1440 600"
+              className="h-full w-full"
+              preserveAspectRatio="xMidYMid slice"
+            >
+              <motion.path
+                fill={layer.color}
+                initial={{ d: layer.pathA }}
+                animate={{ d: [layer.pathA, layer.pathB, layer.pathA] }}
+                transition={{
+                  duration: layer.duration,
+                  delay: layer.delay,
+                  repeat: Infinity,
+                  repeatType: "mirror",
+                  ease: "easeInOut",
+                }}
+              />
+            </svg>
+          </motion.div>
+        );
+})}
     </div>
   );
 }
@@ -1052,7 +1067,7 @@ function CartPage({ cart, setCart }) {
             Tu carrito
           </p>
 
-          <h1 className="mt-4 text-4xl font-black tracking-tight text-zinc-900 md:text-6xl">
+          <h1 className="mt-4 text-4xl font-crepisimo tracking-tight text-zinc-900 md:text-6xl">
             Resumen de compra
           </h1>
         </div>
