@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 
+
 const palette = {
   morado: {
     main: "#7936AD",
@@ -538,9 +539,7 @@ function BranchesPage() {
             variant="main"
             className="mx-auto w-[220px] drop-shadow-[0_8px_35px_rgba(0,0,0,0.15)] md:w-[340px]"
           />
-          <p className="mt-4 text-sm font-semibold uppercase tracking-[0.35em] text-white md:text-base">
-            Sucursales
-          </p>
+          
         </div>
 
         <div className="mt-12 grid items-start gap-8 xl:grid-cols-[1.45fr_0.75fr]">
@@ -643,182 +642,155 @@ function FranchisePage() {
         <StaticDripSingle />
       </div>
 
-      <div className="relative z-10 px-6 pb-24 pt-36 md:px-10">
+      <div className="relative z-10 px-6 pb-24 pt-32 md:px-10 md:pt-36">
         <div className="mx-auto max-w-7xl">
           {/* HERO */}
           <section className="text-center">
-            <h1
-              className="mx-auto max-w-4xl text-4xl font-black tracking-tight text-white md:text-6xl"
-              style={{ fontFamily: 'CrepisimoDisplay' }}
-            >
-              Lleva Crep!simo a tu ciudad
-            </h1>
+                      <h1
+                        className="font-crepisimo mx-auto max-w-5xl text-[2.6rem] text-white md:text-[4.5rem]"
+                        style={{
+                          fontWeight: 400,
+                          letterSpacing: "-0.035em",
+                          lineHeight: 0.95,
+                        }}
+                      >
+                        Lleva Crep!simo
+                        <br />
+                        a tu ciudad
+                      </h1>
 
-            <p className="mx-auto mt-6 max-w-2xl text-base leading-8 text-white/95 md:text-lg">
-              Abre una crepería con una imagen atractiva, una experiencia memorable y una marca lista para crecer.
-            </p>
-          </section>
+                      
+                    </section>
 
-          {/* IDEAS CLAVE */}
-          <section className="mt-14">
-            <div className="grid gap-4 md:grid-cols-3">
-              <div className="rounded-[1.8rem] bg-white/78 px-6 py-5 backdrop-blur-sm">
-                <p className="text-lg font-black text-zinc-900">Imagen de marca</p>
-                <p className="mt-2 text-sm leading-6 text-zinc-700">
-                  Una identidad visual fuerte y fácil de recordar.
+                    {/* TEXTO ARRIBA + IMAGEN ABAJO */}
+                    <section className="mt-14 grid items-stretch gap-10 lg:grid-cols-2">
+            {/* COLUMNA IZQUIERDA */}
+            <div className="flex h-full flex-col">
+              {/* TEXTO */}
+              <div className="max-w-xl">
+                <p
+                  className="text-sm font-bold uppercase tracking-[0.22em]"
+                  style={{ color: palette.morado.main }}
+                >
+                  La oportunidad
+                </p>
+
+                <h2 className="mt-3 text-2xl font-black tracking-tight text-zinc-900 md:text-4xl">
+                  Abre tu propia sucursal Crep!simo
+                </h2>
+
+                <p
+                  className="mt-5 text-base leading-8 md:text-lg"
+                  style={{ color: palette.neutrals.text }}
+                >
+                  Una marca lista para crecer, con imagen fuerte, productos atractivos y una experiencia que conecta desde el primer momento.
                 </p>
               </div>
 
-              <div className="rounded-[1.8rem] bg-white/78 px-6 py-5 backdrop-blur-sm">
-                <p className="text-lg font-black text-zinc-900">Producto atractivo</p>
-                <p className="mt-2 text-sm leading-6 text-zinc-700">
-                  Crepas y bebidas que se antojan desde la primera vista.
-                </p>
-              </div>
-
-              <div className="rounded-[1.8rem] bg-white/78 px-6 py-5 backdrop-blur-sm">
-                <p className="text-lg font-black text-zinc-900">Oportunidad de expansión</p>
-                <p className="mt-2 text-sm leading-6 text-zinc-700">
-                  Un concepto pensado para crecer en nuevas ubicaciones.
-                </p>
+              {/* IMAGEN (ALINEADA ABAJO) */}
+              <div className="mt-auto overflow-hidden rounded-[2.4rem] shadow-[0_22px_55px_rgba(0,0,0,0.10)]">
+                <img
+                  src="/sucursal.png"
+                  alt="Sucursal Crep!simo"
+                  className="h-[360px] w-full object-cover md:h-[520px]"
+                />
               </div>
             </div>
-          </section>
 
-          {/* IMAGEN + FORMULARIO */}
-          <section className="mt-16 grid items-start gap-8 lg:grid-cols-[1.05fr_0.95fr]">
-            <div className="overflow-hidden rounded-[2.3rem] shadow-[0_20px_50px_rgba(0,0,0,0.10)]">
-              <img
-                src="/sucursal.png"
-                alt="Sucursal Crep!simo"
-                className="h-[360px] w-full object-cover md:h-[620px]"
-              />
-            </div>
-
-            <div className="rounded-[2.3rem] bg-white/82 p-6 shadow-[0_20px_50px_rgba(0,0,0,0.08)] backdrop-blur-sm md:p-8">
+            {/* COLUMNA DERECHA */}
+            <div className="flex h-full flex-col rounded-[2.4rem] bg-white/92 p-6 shadow-[0_20px_50px_rgba(0,0,0,0.08)] md:p-8">
               <p
-                className="text-sm font-bold uppercase tracking-[0.24em]"
-                style={{ color: palette.morado.main }}
+                className="text-sm font-bold uppercase tracking-[0.22em]"
+                style={{ color: palette.naranja.main }}
               >
-                ¿Te interesa la marca?
+                Solicita información
               </p>
 
-              <h2 className="mt-3 text-3xl font-black tracking-tight text-zinc-900 md:text-4xl">
+              <h2 className="mt-3 text-2xl font-black tracking-tight text-zinc-900 md:text-3xl">
                 Déjanos tus datos
               </h2>
 
               <p className="mt-4 text-sm leading-7 text-zinc-700 md:text-base">
-                Completa este formulario y nos pondremos en contacto contigo para compartirte más información.
+                Compártenos tu información y te contactaremos.
               </p>
 
-              <form className="mt-8 space-y-4">
-                <div>
-                  <label className="mb-2 block text-sm font-semibold text-zinc-800">
-                    Nombre
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="Tu nombre"
-                    className="w-full rounded-[1.2rem] border border-white/60 bg-white px-4 py-3 text-sm text-zinc-900 outline-none"
-                  />
-                </div>
+              <form className="mt-8 flex flex-col gap-4">
+                <input
+                  type="text"
+                  placeholder="Nombre"
+                  className="w-full rounded-[1.2rem] border border-zinc-200 px-4 py-3 text-sm outline-none focus:border-zinc-400"
+                />
 
-                <div>
-                  <label className="mb-2 block text-sm font-semibold text-zinc-800">
-                    Teléfono
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="Tu teléfono"
-                    className="w-full rounded-[1.2rem] border border-white/60 bg-white px-4 py-3 text-sm text-zinc-900 outline-none"
-                  />
-                </div>
+                <input
+                  type="text"
+                  placeholder="Teléfono"
+                  className="w-full rounded-[1.2rem] border border-zinc-200 px-4 py-3 text-sm outline-none focus:border-zinc-400"
+                />
 
-                <div>
-                  <label className="mb-2 block text-sm font-semibold text-zinc-800">
-                    Correo electrónico
-                  </label>
-                  <input
-                    type="email"
-                    placeholder="Tu correo"
-                    className="w-full rounded-[1.2rem] border border-white/60 bg-white px-4 py-3 text-sm text-zinc-900 outline-none"
-                  />
-                </div>
+                <input
+                  type="email"
+                  placeholder="Correo electrónico"
+                  className="w-full rounded-[1.2rem] border border-zinc-200 px-4 py-3 text-sm outline-none focus:border-zinc-400"
+                />
 
-                <div>
-                  <label className="mb-2 block text-sm font-semibold text-zinc-800">
-                    Ciudad de interés
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="Ej. Puebla"
-                    className="w-full rounded-[1.2rem] border border-white/60 bg-white px-4 py-3 text-sm text-zinc-900 outline-none"
-                  />
-                </div>
+                <input
+                  type="text"
+                  placeholder="Ciudad"
+                  className="w-full rounded-[1.2rem] border border-zinc-200 px-4 py-3 text-sm outline-none focus:border-zinc-400"
+                />
 
-                <div>
-                  <label className="mb-2 block text-sm font-semibold text-zinc-800">
-                    Mensaje
-                  </label>
-                  <textarea
-                    placeholder="Cuéntanos un poco sobre tu interés"
-                    rows={4}
-                    className="w-full rounded-[1.2rem] border border-white/60 bg-white px-4 py-3 text-sm text-zinc-900 outline-none"
-                  />
-                </div>
+                <textarea
+                  placeholder="Mensaje"
+                  rows={4}
+                  className="w-full rounded-[1.2rem] border border-zinc-200 px-4 py-3 text-sm outline-none focus:border-zinc-400"
+                />
 
                 <button
                   type="submit"
-                  className="w-full rounded-full px-7 py-3 text-sm font-bold text-white"
+                  className="mt-2 w-full rounded-full px-7 py-3 text-sm font-bold text-white transition hover:opacity-90"
                   style={{ backgroundColor: palette.morado.main }}
                 >
                   Enviar información
                 </button>
               </form>
 
-              {/* CONTACTO */}
-              <div className="mt-8 border-t border-zinc-200 pt-6">
-                <p
-                  className="text-sm font-bold uppercase tracking-[0.22em]"
-                  style={{ color: palette.naranja.main }}
+              {/* REDES (ICONOS) */}
+              <div className="mt-8 flex items-center gap-4">
+                {/* FACEBOOK */}
+                <a
+                  href="#"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex h-11 w-11 items-center justify-center rounded-full bg-[#1877F2] text-white transition hover:scale-105"
                 >
-                  También puedes contactarnos
-                </p>
+                  <svg viewBox="0 0 24 24" className="h-5 w-5 fill-white">
+                    <path d="M22 12a10 10 0 1 0-11.6 9.9v-7h-2.4v-2.9h2.4V9.6c0-2.4 1.4-3.7 3.6-3.7 1 0 2 .2 2 .2v2.2h-1.2c-1.2 0-1.6.8-1.6 1.5v1.8h2.7l-.4 2.9h-2.3v7A10 10 0 0 0 22 12z" />
+                  </svg>
+                </a>
 
-                <div className="mt-4 flex flex-wrap gap-3">
-                  <button
-                    className="rounded-full px-5 py-3 text-sm font-bold text-white"
-                    style={{ backgroundColor: palette.azul.main }}
-                  >
-                    Facebook
-                  </button>
+                {/* INSTAGRAM */}
+                <a
+                  href="https://www.instagram.com/crepisimo.mx?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-tr from-pink-500 via-red-500 to-yellow-500 text-white transition hover:scale-105"
+                >
+                  <svg viewBox="0 0 24 24" className="h-5 w-5 fill-white">
+                    <path d="M7 2C4.2 2 2 4.2 2 7v10c0 2.8 2.2 5 5 5h10c2.8 0 5-2.2 5-5V7c0-2.8-2.2-5-5-5H7zm0 2h10c1.7 0 3 1.3 3 3v10c0 1.7-1.3 3-3 3H7c-1.7 0-3-1.3-3-3V7c0-1.7 1.3-3 3-3zm5 3.2A4.8 4.8 0 1 0 12 17a4.8 4.8 0 0 0 0-9.6zm0 2A2.8 2.8 0 1 1 12 15a2.8 2.8 0 0 1 0-5.6zm4.5-.9a1.1 1.1 0 1 0 0 2.2 1.1 1.1 0 0 0 0-2.2z" />
+                  </svg>
+                </a>
 
-                  <button
-                    className="rounded-full px-5 py-3 text-sm font-bold text-white"
-                    style={{ backgroundColor: palette.rosa.main }}
-                  >
-                    Instagram
-                  </button>
-
-                  <button
-                    className="rounded-full px-5 py-3 text-sm font-bold text-white"
-                    style={{ backgroundColor: palette.naranja.main }}
-                  >
-                    Correo electrónico
-                  </button>
-                </div>
+                {/* EMAIL */}
+                <a
+                  href="mailto:contacto@crepisimo.com"
+                  className="flex h-11 w-11 items-center justify-center rounded-full text-white transition hover:scale-105"
+                  style={{ backgroundColor: palette.naranja.main }}
+                >
+                  <svg viewBox="0 0 24 24" className="h-5 w-5 fill-white">
+                    <path d="M2 4h20v16H2V4zm10 7L4 6v12h16V6l-8 5z" />
+                  </svg>
+                </a>
               </div>
-            </div>
-          </section>
-
-          {/* IMAGEN SECUNDARIA */}
-          <section className="mt-12">
-            <div className="overflow-hidden rounded-[2.3rem] shadow-[0_20px_50px_rgba(0,0,0,0.08)]">
-              <img
-                src="/bebida_italiana.png"
-                alt="Bebida italiana Crep!simo"
-                className="h-[260px] w-full object-cover md:h-[360px]"
-              />
             </div>
           </section>
         </div>
