@@ -40,7 +40,7 @@ const palette = {
 const navItems = [
   { id: "inicio", label: "Inicio" },
   { id: "sucursales", label: "Sucursales" },
-  { id: "franquicia", label: "Franquicia" },
+  { id: "franquicia", label: "Únete" },
   { id: "concentrados", label: "Concentrados" },
   { id: "contacto", label: "Contacto" },
 ];
@@ -246,10 +246,10 @@ function Header({ page, setPage }) {
       >
         <button
           onClick={() => setPage("inicio")}
-          className="flex items-center"
-          aria-label="Ir al inicio"
+          className="flex items-center rounded-full px-3 py-2"
+          style={{ backgroundColor: palette.morado.main }}
         >
-          <BrandLogo variant="header" className="h-8 w-auto md:h-9" />
+          <BrandLogo variant="header" className="h-7 w-auto md:h-8" />
         </button>
 
         <button
@@ -468,21 +468,18 @@ function BranchesPage() {
       address: "Revolución 17, San Buenaventura Atempa, Tlaxcala",
       top: "56%",
       left: "63%",
-      bg: `linear-gradient(180deg, ${palette.rosa.soft} 0%, ${palette.azul.soft} 100%)`,
     },
     {
       city: "El Carmen",
       address: "El Carmen",
       top: "58%",
       left: "61%",
-      bg: `linear-gradient(180deg, ${palette.amarillo.soft} 0%, ${palette.naranja.soft} 100%)`,
     },
     {
       city: "Oaxaca Centro",
       address: "Oaxaca Centro",
       top: "68%",
       left: "57%",
-      bg: `linear-gradient(180deg, ${palette.morado.light} 0%, ${palette.azul.light} 100%)`,
     },
     {
       city: "Puebla",
@@ -490,98 +487,117 @@ function BranchesPage() {
         "Blvrd Circunvalación 1039, Jardines de San Manuel, 72570 Heroica Puebla de Zaragoza, Pue.",
       top: "60%",
       left: "62%",
-      bg: `linear-gradient(180deg, ${palette.azul.light} 0%, ${palette.morado.light} 100%)`,
     },
     {
       city: "San Francisco Telixtlahuaca",
       address: "San Francisco Telixtlahuaca, Oaxaca",
       top: "66%",
       left: "55%",
-      bg: `linear-gradient(180deg, ${palette.naranja.light} 0%, ${palette.amarillo.soft} 100%)`,
     },
   ];
 
+  const [activeBranch, setActiveBranch] = useState(branchPins[0]);
+
   return (
     <div
-      className="relative min-h-screen overflow-hidden px-6 pb-24 pt-28 md:px-10"
+      className="relative min-h-screen overflow-hidden px-6 pb-20 pt-28 md:px-10"
       style={{ backgroundColor: palette.azul.soft }}
     >
-      <div className="mx-auto max-w-6xl text-center">
-        <BrandLogo
-          variant="main"
-          className="mx-auto w-[220px] drop-shadow-[0_8px_35px_rgba(0,0,0,0.15)] md:w-[340px]"
-        />
-        <p className="mt-3 text-base font-semibold uppercase tracking-[0.45em] text-white md:text-xl">
-          
-        </p>
-      </div>
-
-      <div className="mx-auto mt-12 max-w-6xl">
-        <div className="relative mx-auto w-full max-w-4xl">
-          <img
-            src="mx.svg"
-            alt="Mapa de México con nombres de estados"
-            className="mx-auto w-full max-w-[900px] opacity-40"
+      <div className="mx-auto max-w-[1500px]">
+        <div className="text-center">
+          <BrandLogo
+            variant="main"
+            className="mx-auto w-[220px] drop-shadow-[0_8px_35px_rgba(0,0,0,0.15)] md:w-[340px]"
           />
-
-          {branchPins.map((branch) => (
-            <div
-              key={branch.city}
-              className="absolute -translate-x-1/2 -translate-y-1/2"
-              style={{ top: branch.top, left: branch.left }}
-            >
-              <div className="relative">
-                <div
-                  className="h-5 w-5 rounded-full shadow-[0_0_0_6px_rgba(255,255,255,0.35)]"
-                  style={{ backgroundColor: palette.naranja.main }}
-                />
-                <div
-                  className="absolute left-1/2 top-3 h-4 w-4 -translate-x-1/2 rotate-45"
-                  style={{ backgroundColor: palette.naranja.main }}
-                />
-              </div>
-            </div>
-          ))}
+          <p className="mt-4 text-sm font-semibold uppercase tracking-[0.35em] text-white md:text-base">
+            Sucursales
+          </p>
         </div>
 
-        <div className="mt-14 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-          {branchPins.map((branch, index) => (
-            <motion.article
-              key={branch.city}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: index * 0.06 }}
-              whileHover={{ y: -6, scale: 1.01, rotate: index % 2 === 0 ? -1 : 1 }}
-              className="overflow-hidden rounded-[2.2rem] shadow-[0_20px_60px_rgba(0,0,0,0.08)]"
-              style={{ background: branch.bg }}
-            >
-              <div className="relative h-48 overflow-hidden">
-                <div className="absolute inset-0 bg-white/20" />
-                <div className="absolute -right-6 -top-6 h-28 w-28 rounded-full bg-white/30 blur-md" />
-                <div className="absolute left-5 top-5 flex items-center gap-2 rounded-full bg-white/75 px-4 py-2 text-xs font-bold uppercase tracking-[0.2em] text-zinc-700">
-                  <span
-                    className="h-3 w-3 rounded-full"
+        <div className="mt-12 grid items-start gap-8 xl:grid-cols-[1.45fr_0.75fr]">
+          {/* MAPA */}
+          <div className="rounded-[2rem] bg-white/40 p-4 shadow-[0_20px_60px_rgba(0,0,0,0.08)] ring-1 ring-white/50 backdrop-blur-sm md:p-6 lg:p-8">
+            <div className="relative mx-auto w-full max-w-[980px] xl:max-w-[1100px]">
+              <img
+                src="/mx.svg"
+                alt="Mapa de México con sucursales de Crep!simo"
+                className="block h-auto w-full"
+              />
+
+              {/* SOLO UN PIN: el activo */}
+              <div
+                className="absolute -translate-x-1/2 -translate-y-1/2"
+                style={{ top: activeBranch.top, left: activeBranch.left }}
+              >
+                <div className="relative">
+                  <div
+                    className="rounded-full px-4 py-2 text-xs font-black uppercase tracking-[0.16em] text-white shadow-[0_12px_30px_rgba(0,0,0,0.18)] md:text-sm"
+                    style={{ backgroundColor: palette.naranja.main }}
+                  >
+                    {activeBranch.city}
+                  </div>
+
+                  <div
+                    className="absolute left-1/2 top-full h-4 w-4 -translate-x-1/2 -translate-y-1/2 rotate-45"
                     style={{ backgroundColor: palette.naranja.main }}
                   />
-                  Sucursal
-                </div>
-                <div className="absolute bottom-5 left-5 right-5">
-                  <h3
-                    className="text-4xl font-black leading-none text-zinc-900"
-                    style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}
-                  >
-                    {branch.city}
-                  </h3>
                 </div>
               </div>
+            </div>
+          </div>
 
-              <div className="bg-white/55 p-6 backdrop-blur-sm">
-                <p className="text-sm font-semibold leading-6 text-zinc-700">
-                  {branch.address}
-                </p>
-              </div>
-            </motion.article>
-          ))}
+          {/* LISTA */}
+          <div className="rounded-[2rem] bg-white/55 p-4 shadow-[0_20px_60px_rgba(0,0,0,0.08)] ring-1 ring-white/60 backdrop-blur-sm md:p-6">
+            <div className="mb-4">
+              <p
+                className="text-sm font-bold uppercase tracking-[0.24em]"
+                style={{ color: palette.morado.main }}
+              >
+                Ubicaciones
+              </p>
+              <h2 className="mt-2 text-2xl font-black text-zinc-900 md:text-3xl">
+                Nuestras sucursales
+              </h2>
+            </div>
+
+            <div className="flex flex-col gap-3">
+              {branchPins.map((branch, index) => {
+                const isActive = activeBranch.city === branch.city;
+
+                return (
+                  <button
+                    key={branch.city}
+                    type="button"
+                    onClick={() => setActiveBranch(branch)}
+                    className="w-full rounded-[1.6rem] p-4 text-left transition duration-200"
+                    style={{
+                      background: isActive
+                        ? `linear-gradient(135deg, ${palette.morado.light} 0%, ${palette.azul.light} 100%)`
+                        : "rgba(255,255,255,0.72)",
+                      border: `1px solid ${
+                        isActive ? palette.morado.soft : "rgba(255,255,255,0.7)"
+                      }`,
+                    }}
+                  >
+                    <div className="flex items-start gap-3">
+                      <div
+                        className="mt-1 h-3.5 w-3.5 shrink-0 rounded-full"
+                        style={{ backgroundColor: palette.naranja.main }}
+                      />
+                      <div>
+                        <p className="text-base font-black text-zinc-900 md:text-lg">
+                          {index + 1}. {branch.city}
+                        </p>
+                        <p className="mt-1 text-sm leading-6 text-zinc-700">
+                          {branch.address}
+                        </p>
+                      </div>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
         </div>
       </div>
     </div>
