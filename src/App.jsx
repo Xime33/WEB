@@ -82,15 +82,15 @@ const branches = [
 
 const featuredPhotos = [
   {
-    title: "El Carmen",
+    
     image: "/el carmen.png",
   },
   {
-    title: "Bebidas",
+    
     image: "/bebida.png",
   },
   {
-    title: "Promociones",
+    
     image: "/promo.png",
   },
 ];
@@ -440,7 +440,7 @@ function HomePage() {
       <section className="relative z-10 -mt-80 px-6 pb-24 md:-mt-[24rem] md:px-10">
         <div className="mx-auto max-w-6xl">
           <div className="mb-6 text-center">
-            <p className="text-sm font-bold uppercase tracking-[0.3em] text-white/90">
+            <p className="text-sm font-bold uppercase tracking-[0.3em] text-black/90">
               Lo nuevo en Crep!simo
             </p>
           </div>
