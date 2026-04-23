@@ -1,7 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X } from "lucide-react";
-
+import { Menu, X, ShoppingBag, Plus, Minus, Trash2, CreditCard } from "lucide-react";
 
 const palette = {
   morado: {
@@ -42,9 +41,9 @@ const navItems = [
   { id: "inicio", label: "Inicio" },
   { id: "sucursales", label: "Sucursales" },
   { id: "franquicia", label: "Únete" },
-  { id: "concentrados", label: "Concentrados" },
-  { id: "contacto", label: "Contacto" },
+  { id: "productos", label: "Productos" },
 ];
+
 
 const branches = [
   {
@@ -84,35 +83,82 @@ const featuredPhotos = [
   {
     
     image: "/el carmen.png",
+    href: "https://www.instagram.com/crepisimo.mx?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==",
   },
   {
     
     image: "/bebida.png",
+    href: "https://www.instagram.com/crepisimo.mx?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==",
   },
   {
     
     image: "/promo.png",
+    href: "https://www.instagram.com/crepisimo.mx?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==",
   },
 ];
 
-const concentrates = [
+const productsCatalog = [
   {
-    title: "Concentrados para bebidas",
-    text: "Línea de producto propia para sodas italianas, bebidas frías y combinaciones de temporada.",
+    id: 1,
+    title: "Concentrado frutos rojos",
+    category: "Concentrados",
+    price: 189,
+    image: "/concentrado1.png",
+    accent: palette.rosa.light,
+    description: "Ideal para sodas italianas, bebidas frías y combinaciones de temporada.",
   },
   {
-    title: "Presentación comercial",
-    text: "La web puede mostrar beneficios, aplicaciones, formatos y proceso de compra para distribuidores o negocios.",
+    id: 2,
+    title: "Concentrado mango tropical",
+    category: "Concentrados",
+    price: 195,
+    image: "/concentrado3.png",
+    accent: palette.amarillo.light,
+    description: "Perfil dulce y fresco para bebidas llamativas con identidad visual fuerte.",
   },
   {
-    title: "Venta de marca",
-    text: "No solo se vende el producto; también se vende la estética, la consistencia y la experiencia Crep!simo.",
+    id: 3,
+    title: "Concentrado blueberry",
+    category: "Concentrados",
+    price: 205,
+    image: "/concentrado2.png",
+    accent: palette.azul.light,
+    description: "Sabor vibrante para menús creativos y propuestas de temporada.",
   },
+  {
+    id: 4,
+    title: "Playera Crep!simo",
+    category: "Merch",
+    price: 299,
+    image: "/playera.png",
+    accent: palette.morado.light,
+    description: "Merch de marca con presencia visual coherente con la identidad Crep!simo.",
+  },
+  {
+    id: 5,
+    title: "Vaso edición día del niño",
+    category: "Merch",
+    price: 129,
+    image: "/vaso_nino.png",
+    accent: palette.naranja.light,
+    description: "Pieza visual para reforzar la experiencia de marca dentro y fuera del local.",
+  },
+
+  {
+    id: 6,
+    title: "Vaso edición Guelaguetza",
+    category: "Merch",
+    price: 129,
+    image: "/vaso2.png",
+    accent: palette.naranja.light,
+    description: "Pieza visual para reforzar la experiencia de marca dentro y fuera del local.",
+  }
+
+  
 ];
 
 function BrandLogo({ variant = "main", className = "" }) {
   const src = variant === "header" ? "/Logo_minimo.png" : "/Logo.png";
-
   return <img src={src} alt="Crep!simo" className={className} />;
 }
 
@@ -215,9 +261,7 @@ function LiquidDrips() {
             <motion.path
               fill={layer.color}
               initial={{ d: layer.pathA }}
-              animate={{
-                d: [layer.pathA, layer.pathB, layer.pathA],
-              }}
+              animate={{ d: [layer.pathA, layer.pathB, layer.pathA] }}
               transition={{
                 duration: layer.duration,
                 delay: layer.delay,
@@ -262,7 +306,7 @@ function StaticDripSingle() {
   );
 }
 
-function Header({ page, setPage }) {
+function Header({ page, setPage, cartCount }) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -312,27 +356,45 @@ function Header({ page, setPage }) {
           </AnimatePresence>
         </button>
 
-        <nav className="hidden items-center gap-2 md:flex">
-          {navItems.map((item) => (
-            <button
-              key={item.id}
-              onClick={() => setPage(item.id)}
-              className="rounded-full px-4 py-2 text-sm font-semibold transition"
-              style={
-                page === item.id
-                  ? {
-                      backgroundColor: palette.morado.light,
-                      color: palette.neutrals.dark,
-                    }
-                  : {
-                      color: palette.neutrals.text,
-                    }
-              }
-            >
-              {item.label}
-            </button>
-          ))}
-        </nav>
+        <div className="hidden items-center gap-3 md:flex">
+          <nav className="flex items-center gap-2">
+            {navItems.map((item) => (
+              <button
+                key={item.id}
+                onClick={() => setPage(item.id)}
+                className="rounded-full px-4 py-2 text-sm font-semibold transition"
+                style={
+                  page === item.id
+                    ? {
+                        backgroundColor: palette.morado.light,
+                        color: palette.neutrals.dark,
+                      }
+                    : {
+                        color: palette.neutrals.text,
+                      }
+                }
+              >
+                {item.label}
+              </button>
+            ))}
+          </nav>
+
+          <button
+            onClick={() => setPage("carrito")}
+            className="relative flex h-11 w-11 items-center justify-center rounded-full"
+            style={{ backgroundColor: palette.azul.light, color: palette.morado.main }}
+          >
+            <ShoppingBag size={18} />
+            {cartCount > 0 && (
+              <span
+                className="absolute -right-1 -top-1 flex h-5 min-w-[20px] items-center justify-center rounded-full px-1 text-[11px] font-bold text-white"
+                style={{ backgroundColor: palette.naranja.main }}
+              >
+                {cartCount}
+              </span>
+            )}
+          </button>
+        </div>
       </div>
 
       <AnimatePresence>
@@ -379,7 +441,7 @@ function Header({ page, setPage }) {
 }
 
 function FeaturedPhotoCard({ item }) {
-  return (
+  const content = (
     <article className="group overflow-hidden rounded-[2.2rem] bg-white/35 shadow-[0_20px_50px_rgba(0,0,0,0.08)] ring-1 ring-white/50 backdrop-blur-sm transition duration-300 hover:-translate-y-1">
       <div className="relative aspect-[4/5] overflow-hidden">
         <img
@@ -398,6 +460,16 @@ function FeaturedPhotoCard({ item }) {
       </div>
     </article>
   );
+
+  if (item.href) {
+    return (
+      <a href={item.href} target="_blank" rel="noopener noreferrer" className="block">
+        {content}
+      </a>
+    );
+  }
+
+  return content;
 }
 
 function HomePage() {
@@ -424,15 +496,6 @@ function HomePage() {
                 className="w-[240px] drop-shadow-[0_8px_35px_rgba(0,0,0,0.16)] sm:w-[320px] md:w-[420px] lg:w-[500px]"
               />
             </motion.div>
-
-            <motion.p
-              initial={{ y: 18, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ duration: 0.9, delay: 0.85 }}
-              className="mt-4 text-base font-semibold uppercase tracking-[0.45em] text-white md:text-xl"
-            >
-              
-            </motion.p>
           </motion.div>
         </div>
       </section>
@@ -539,11 +602,9 @@ function BranchesPage() {
             variant="main"
             className="mx-auto w-[220px] drop-shadow-[0_8px_35px_rgba(0,0,0,0.15)] md:w-[340px]"
           />
-          
         </div>
 
         <div className="mt-12 grid items-start gap-8 xl:grid-cols-[1.45fr_0.75fr]">
-          {/* MAPA */}
           <div className="rounded-[2rem] bg-white/40 p-4 shadow-[0_20px_60px_rgba(0,0,0,0.08)] ring-1 ring-white/50 backdrop-blur-sm md:p-6 lg:p-8">
             <div className="relative mx-auto w-full max-w-[980px] xl:max-w-[1100px]">
               <img
@@ -552,7 +613,6 @@ function BranchesPage() {
                 className="block h-auto w-full"
               />
 
-              {/* SOLO UN PIN: el activo */}
               <div
                 className="absolute -translate-x-1/2 -translate-y-1/2"
                 style={{ top: activeBranch.top, left: activeBranch.left }}
@@ -574,7 +634,6 @@ function BranchesPage() {
             </div>
           </div>
 
-          {/* LISTA */}
           <div className="rounded-[2rem] bg-white/55 p-4 shadow-[0_20px_60px_rgba(0,0,0,0.08)] ring-1 ring-white/60 backdrop-blur-sm md:p-6">
             <div className="mb-4">
               <p
@@ -644,29 +703,23 @@ function FranchisePage() {
 
       <div className="relative z-10 px-6 pb-24 pt-32 md:px-10 md:pt-36">
         <div className="mx-auto max-w-7xl">
-          {/* HERO */}
           <section className="text-center">
-                      <h1
-                        className="font-crepisimo mx-auto max-w-5xl text-[2.6rem] text-white md:text-[4.5rem]"
-                        style={{
-                          fontWeight: 400,
-                          letterSpacing: "-0.035em",
-                          lineHeight: 0.95,
-                        }}
-                      >
-                        Lleva Crep!simo
-                        <br />
-                        a tu ciudad
-                      </h1>
+            <h1
+              className="font-crepisimo mx-auto max-w-5xl text-[2.6rem] text-white md:text-[4.5rem]"
+              style={{
+                fontWeight: 400,
+                letterSpacing: "-0.035em",
+                lineHeight: 0.95,
+              }}
+            >
+              Lleva Crep!simo
+              <br />
+              a tu ciudad
+            </h1>
+          </section>
 
-                      
-                    </section>
-
-                    {/* TEXTO ARRIBA + IMAGEN ABAJO */}
-                    <section className="mt-14 grid items-stretch gap-10 lg:grid-cols-2">
-            {/* COLUMNA IZQUIERDA */}
+          <section className="mt-14 grid items-stretch gap-10 lg:grid-cols-2">
             <div className="flex h-full flex-col">
-              {/* TEXTO */}
               <div className="max-w-xl">
                 <p
                   className="text-sm font-bold uppercase tracking-[0.22em]"
@@ -687,7 +740,6 @@ function FranchisePage() {
                 </p>
               </div>
 
-              {/* IMAGEN (ALINEADA ABAJO) */}
               <div className="mt-auto overflow-hidden rounded-[2.4rem] shadow-[0_22px_55px_rgba(0,0,0,0.10)]">
                 <img
                   src="/sucursal.png"
@@ -697,7 +749,6 @@ function FranchisePage() {
               </div>
             </div>
 
-            {/* COLUMNA DERECHA */}
             <div className="flex h-full flex-col rounded-[2.4rem] bg-white/92 p-6 shadow-[0_20px_50px_rgba(0,0,0,0.08)] md:p-8">
               <p
                 className="text-sm font-bold uppercase tracking-[0.22em]"
@@ -720,25 +771,21 @@ function FranchisePage() {
                   placeholder="Nombre"
                   className="w-full rounded-[1.2rem] border border-zinc-200 px-4 py-3 text-sm outline-none focus:border-zinc-400"
                 />
-
                 <input
                   type="text"
                   placeholder="Teléfono"
                   className="w-full rounded-[1.2rem] border border-zinc-200 px-4 py-3 text-sm outline-none focus:border-zinc-400"
                 />
-
                 <input
                   type="email"
                   placeholder="Correo electrónico"
                   className="w-full rounded-[1.2rem] border border-zinc-200 px-4 py-3 text-sm outline-none focus:border-zinc-400"
                 />
-
                 <input
                   type="text"
                   placeholder="Ciudad"
                   className="w-full rounded-[1.2rem] border border-zinc-200 px-4 py-3 text-sm outline-none focus:border-zinc-400"
                 />
-
                 <textarea
                   placeholder="Mensaje"
                   rows={4}
@@ -754,9 +801,7 @@ function FranchisePage() {
                 </button>
               </form>
 
-              {/* REDES (ICONOS) */}
               <div className="mt-8 flex items-center gap-4">
-                {/* FACEBOOK */}
                 <a
                   href="#"
                   target="_blank"
@@ -768,7 +813,6 @@ function FranchisePage() {
                   </svg>
                 </a>
 
-                {/* INSTAGRAM */}
                 <a
                   href="https://www.instagram.com/crepisimo.mx?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
                   target="_blank"
@@ -780,7 +824,6 @@ function FranchisePage() {
                   </svg>
                 </a>
 
-                {/* EMAIL */}
                 <a
                   href="mailto:contacto@crepisimo.com"
                   className="flex h-11 w-11 items-center justify-center rounded-full text-white transition hover:scale-105"
@@ -799,111 +842,382 @@ function FranchisePage() {
   );
 }
 
-function ConcentratesPage() {
+function ProductCard({ product, onAdd }) {
   return (
-    <PageShell
-      eyebrow="Concentrados"
-      title="Una línea de producto que también comunica marca"
-      description="La sección de concentrados puede vender el producto, mostrar sus aplicaciones y reforzar la estética propia de Crep!simo con una presentación visual clara y atractiva."
+    <article
+      className="overflow-hidden rounded-[2rem] shadow-[0_20px_55px_rgba(0,0,0,0.07)] ring-1 ring-white/70 backdrop-blur-sm"
+      style={{ backgroundColor: "rgba(255,255,255,0.78)" }}
     >
-      <div className="mb-10 flex justify-center">
-        <BrandLogo variant="main" className="w-[180px] md:w-[260px]" />
-      </div>
-
-      <div className="grid gap-6 md:grid-cols-3">
-        {concentrates.map((item, index) => (
-          <motion.article
-            key={item.title}
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.35, delay: index * 0.08 }}
-            className="rounded-[2rem] p-8 shadow-[0_20px_50px_rgba(0,0,0,0.06)] ring-1 backdrop-blur-sm"
+      <div
+        className="relative aspect-[4/3] overflow-hidden p-4"
+        style={{ backgroundColor: product.accent }}
+      >
+        <img
+          src={product.image}
+          alt={product.title}
+          className="h-full w-full object-contain transition duration-500 hover:scale-105"
+        />
+        <div className="absolute left-4 top-4">
+          <span
+            className="rounded-full px-3 py-1 text-xs font-bold uppercase tracking-[0.16em]"
             style={{
-              background:
-                index === 0
-                  ? `linear-gradient(180deg, ${palette.naranja.soft} 0%, ${palette.amarillo.soft} 100%)`
-                  : index === 1
-                  ? `linear-gradient(180deg, ${palette.azul.light} 0%, ${palette.morado.light} 100%)`
-                  : `linear-gradient(180deg, ${palette.rosa.soft} 0%, ${palette.naranja.light} 100%)`,
-              borderColor: "rgba(255,255,255,0.6)",
+              backgroundColor: "rgba(255,255,255,0.85)",
+              color: palette.neutrals.dark,
             }}
           >
-            <h3
-              className="text-2xl font-black"
-              style={{ color: palette.neutrals.dark }}
-            >
-              {item.title}
-            </h3>
-            <p className="mt-4 text-sm leading-7" style={{ color: palette.neutrals.text }}>
-              {item.text}
-            </p>
-          </motion.article>
-        ))}
+            {product.category}
+          </span>
+        </div>
       </div>
-    </PageShell>
+
+      <div className="p-6">
+        <h3 className="text-xl font-black text-zinc-900">{product.title}</h3>
+        <p className="mt-3 text-sm leading-7" style={{ color: palette.neutrals.text }}>
+          {product.description}
+        </p>
+
+        <div className="mt-6 flex items-center justify-between gap-4">
+          <p className="text-xl font-black" style={{ color: palette.morado.main }}>
+            ${product.price}
+          </p>
+
+          <button
+            onClick={() => onAdd(product)}
+            className="rounded-full px-5 py-3 text-sm font-bold text-white transition hover:opacity-90"
+            style={{ backgroundColor: palette.morado.main }}
+          >
+            Agregar
+          </button>
+        </div>
+      </div>
+    </article>
   );
 }
 
-function ContactPage() {
+function ProductsPage({ cart, setCart, setPage }) {
+  const [category, setCategory] = useState("Todos");
+
+  const categories = ["Todos", "Concentrados", "Merch"];
+
+  const filteredProducts =
+    category === "Todos"
+      ? productsCatalog
+      : productsCatalog.filter((product) => product.category === category);
+
+  const addToCart = (product) => {
+    setCart((prev) => {
+      const existing = prev.find((item) => item.id === product.id);
+      if (existing) {
+        return prev.map((item) =>
+          item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
+        );
+      }
+      return [...prev, { ...product, quantity: 1 }];
+    });
+  };
+
   return (
-    <PageShell
-      eyebrow="Contacto"
-      title="La última página debe convertir la atención en una acción"
-      description="Aquí irían los botones reales a WhatsApp, formulario para franquicias, solicitudes de mayoreo y enlaces a redes sociales."
+    <div
+      className="min-h-screen px-6 pb-16 pt-32 md:px-10"
+      style={{
+        background: `linear-gradient(180deg, ${palette.neutrals.pageSoft} 0%, ${palette.amarillo.light} 100%)`,
+      }}
     >
-      <div className="mb-10 flex justify-center">
-        <BrandLogo variant="main" className="w-[180px] md:w-[260px]" />
-      </div>
-
-      <div className="grid gap-6 md:grid-cols-2">
-        <div className="rounded-[2rem] bg-white p-8 shadow-sm ring-1 ring-zinc-100">
-          <h3 className="text-2xl font-black text-zinc-900">Contacto comercial</h3>
-          <p className="mt-4 text-sm leading-7 text-zinc-600">
-            Ideal para prospectos interesados en franquicia, colaboración comercial o compra de concentrados.
+      <div className="mx-auto max-w-7xl">
+        <div className="mb-10 text-center">
+          <p
+            className="text-sm font-bold uppercase tracking-[0.26em]"
+            style={{ color: palette.naranja.main }}
+          >
+            Tienda online
           </p>
-          <div className="mt-8 flex flex-wrap gap-4">
-            <button
-              className="rounded-full px-6 py-3 text-sm font-bold text-white"
-              style={{ backgroundColor: palette.rosa.main }}
-            >
-              WhatsApp
-            </button>
-            <button className="rounded-full border border-zinc-300 px-6 py-3 text-sm font-bold text-zinc-900">
-              Solicitar información
-            </button>
-          </div>
+
+          <h1 className="mt-4 text-4xl font-black tracking-tight text-zinc-900 md:text-6xl">
+            Productos Crep!simo
+          </h1>
+
+          <p
+            className="mx-auto mt-5 max-w-3xl text-base leading-8 md:text-lg"
+            style={{ color: palette.neutrals.text }}
+          >
+            Una tienda pensada para concentrados de bebidas y merch, con una estética coherente, colorida y limpia.
+          </p>
         </div>
 
-        <div
-          className="rounded-[2rem] p-8 text-white shadow-xl"
-          style={{ backgroundColor: palette.azul.main }}
-        >
-          <h3 className="text-2xl font-black">Redes y presencia digital</h3>
-          <div className="mt-6 grid gap-4 text-sm leading-7 text-white/95">
-            <div className="rounded-[1.5rem] bg-white/15 p-4">Instagram de la marca</div>
-            <div className="rounded-[1.5rem] bg-white/15 p-4">Ubicaciones en mapa</div>
-            <div className="rounded-[1.5rem] bg-white/15 p-4">Formulario para franquicias</div>
-            <div className="rounded-[1.5rem] bg-white/15 p-4">Solicitud de catálogo de concentrados</div>
+        <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
+          <div className="flex flex-wrap items-center gap-3">
+            {categories.map((item) => {
+              const isActive = category === item;
+
+              return (
+                <button
+                  key={item}
+                  onClick={() => setCategory(item)}
+                  className="rounded-full px-5 py-3 text-sm font-bold transition"
+                  style={{
+                    backgroundColor: isActive ? palette.morado.main : "rgba(255,255,255,0.8)",
+                    color: isActive ? palette.neutrals.white : palette.neutrals.dark,
+                    border: `1px solid ${isActive ? palette.morado.main : palette.morado.light}`,
+                  }}
+                >
+                  {item}
+                </button>
+              );
+            })}
           </div>
+
+          <button
+            onClick={() => setPage("carrito")}
+            className="rounded-full px-6 py-3 text-sm font-bold text-white transition hover:opacity-90"
+            style={{ backgroundColor: palette.naranja.main }}
+          >
+            Ver carrito
+          </button>
+        </div>
+
+        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+          {filteredProducts.map((product) => (
+            <ProductCard key={product.id} product={product} onAdd={addToCart} />
+          ))}
         </div>
       </div>
-    </PageShell>
+    </div>
+  );
+}
+
+function CartPage({ cart, setCart }) {
+  const updateQuantity = (id, type) => {
+    setCart((prev) =>
+      prev
+        .map((item) =>
+          item.id === id
+            ? {
+                ...item,
+                quantity: type === "inc" ? item.quantity + 1 : item.quantity - 1,
+              }
+            : item
+        )
+        .filter((item) => item.quantity > 0)
+    );
+  };
+
+  const removeItem = (id) => {
+    setCart((prev) => prev.filter((item) => item.id !== id));
+  };
+
+  const subtotal = useMemo(
+    () => cart.reduce((acc, item) => acc + item.price * item.quantity, 0),
+    [cart]
+  );
+
+  const shipping = cart.length > 0 ? 99 : 0;
+  const total = subtotal + shipping;
+
+  return (
+    <div
+      className="min-h-screen px-6 pb-16 pt-32 md:px-10"
+      style={{
+        background: `linear-gradient(180deg, ${palette.neutrals.pageSoft} 0%, ${palette.azul.light} 100%)`,
+      }}
+    >
+      <div className="mx-auto max-w-6xl">
+        <div className="mb-10 text-center">
+          <p
+            className="text-sm font-bold uppercase tracking-[0.26em]"
+            style={{ color: palette.morado.main }}
+          >
+            Tu carrito
+          </p>
+
+          <h1 className="mt-4 text-4xl font-black tracking-tight text-zinc-900 md:text-6xl">
+            Resumen de compra
+          </h1>
+        </div>
+
+        <div className="grid gap-8 xl:grid-cols-[1.2fr_0.8fr]">
+          <div className="flex flex-col gap-4">
+            {cart.length === 0 ? (
+              <div
+                className="rounded-[1.8rem] p-6 text-sm leading-7"
+                style={{ backgroundColor: "rgba(255,255,255,0.85)", color: palette.neutrals.text }}
+              >
+                Aún no has agregado productos.
+              </div>
+            ) : (
+              cart.map((item) => (
+                <div
+                  key={item.id}
+                  className="rounded-[1.8rem] bg-white p-5 shadow-[0_20px_40px_rgba(0,0,0,0.06)]"
+                >
+                  <div className="flex items-start gap-4">
+                    <div
+                      className="flex h-24 w-24 shrink-0 items-center justify-center overflow-hidden rounded-[1.2rem] p-2"
+                      style={{ backgroundColor: item.accent }}
+                    >
+                      <img
+                        src={item.image}
+                        alt={item.title}
+                        className="h-full w-full object-contain"
+                      />
+                    </div>
+
+                    <div className="flex-1">
+                      <div className="flex items-start justify-between gap-3">
+                        <div>
+                          <p className="text-lg font-black text-zinc-900">{item.title}</p>
+                          <p className="mt-1 text-sm text-zinc-500">
+                            ${item.price} c/u
+                          </p>
+                        </div>
+
+                        <button
+                          onClick={() => removeItem(item.id)}
+                          className="rounded-full p-2 text-zinc-500 transition hover:bg-zinc-100"
+                        >
+                          <Trash2 size={16} />
+                        </button>
+                      </div>
+
+                      <div className="mt-4 flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          <button
+                            onClick={() => updateQuantity(item.id, "dec")}
+                            className="flex h-9 w-9 items-center justify-center rounded-full border border-zinc-200"
+                          >
+                            <Minus size={15} />
+                          </button>
+
+                          <span className="min-w-[24px] text-center text-sm font-bold">
+                            {item.quantity}
+                          </span>
+
+                          <button
+                            onClick={() => updateQuantity(item.id, "inc")}
+                            className="flex h-9 w-9 items-center justify-center rounded-full border border-zinc-200"
+                          >
+                            <Plus size={15} />
+                          </button>
+                        </div>
+
+                        <p className="text-base font-bold text-zinc-900">
+                          ${item.price * item.quantity}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
+
+          <aside className="h-fit rounded-[2.2rem] bg-white/92 p-6 shadow-[0_20px_55px_rgba(0,0,0,0.08)] ring-1 ring-white/70 backdrop-blur-sm md:p-7 xl:sticky xl:top-28">
+            <div
+              className="rounded-[1.8rem] p-5"
+              style={{ backgroundColor: palette.neutrals.pageSoft }}
+            >
+              <div className="flex items-center justify-between text-sm">
+                <span style={{ color: palette.neutrals.text }}>Subtotal</span>
+                <span className="font-bold text-zinc-900">${subtotal}</span>
+              </div>
+              <div className="mt-3 flex items-center justify-between text-sm">
+                <span style={{ color: palette.neutrals.text }}>Envío</span>
+                <span className="font-bold text-zinc-900">${shipping}</span>
+              </div>
+              <div className="mt-4 border-t border-zinc-200 pt-4">
+                <div className="flex items-center justify-between">
+                  <span className="text-base font-bold text-zinc-900">Total</span>
+                  <span
+                    className="text-2xl font-black"
+                    style={{ color: palette.morado.main }}
+                  >
+                    ${total}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-6 rounded-[1.8rem] bg-white p-5 ring-1 ring-zinc-100">
+              <div className="mb-4 flex items-center gap-3">
+                <div
+                  className="flex h-11 w-11 items-center justify-center rounded-full"
+                  style={{ backgroundColor: palette.azul.light, color: palette.azul.main }}
+                >
+                  <CreditCard size={18} />
+                </div>
+                <div>
+                  <p
+                    className="text-xs font-bold uppercase tracking-[0.18em]"
+                    style={{ color: palette.azul.main }}
+                  >
+                    Pago con tarjeta
+                  </p>
+                  <h3 className="text-lg font-black text-zinc-900">Checkout</h3>
+                </div>
+              </div>
+
+              <div className="grid gap-3">
+                <input
+                  type="text"
+                  placeholder="Nombre en la tarjeta"
+                  className="w-full rounded-[1rem] border border-zinc-200 px-4 py-3 text-sm outline-none focus:border-zinc-400"
+                />
+                <input
+                  type="text"
+                  placeholder="Número de tarjeta"
+                  className="w-full rounded-[1rem] border border-zinc-200 px-4 py-3 text-sm outline-none focus:border-zinc-400"
+                />
+                <div className="grid grid-cols-2 gap-3">
+                  <input
+                    type="text"
+                    placeholder="MM/AA"
+                    className="w-full rounded-[1rem] border border-zinc-200 px-4 py-3 text-sm outline-none focus:border-zinc-400"
+                  />
+                  <input
+                    type="text"
+                    placeholder="CVV"
+                    className="w-full rounded-[1rem] border border-zinc-200 px-4 py-3 text-sm outline-none focus:border-zinc-400"
+                  />
+                </div>
+              </div>
+
+              <button
+                className="mt-5 w-full rounded-full px-6 py-3 text-sm font-bold text-white transition hover:opacity-90"
+                style={{ backgroundColor: cart.length > 0 ? palette.naranja.main : "#d4d4d8" }}
+                disabled={cart.length === 0}
+              >
+                Finalizar compra
+              </button>
+
+              <p className="mt-3 text-xs leading-6 text-zinc-500">
+                Este checkout es visual. Después se puede conectar a una pasarela real.
+              </p>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </div>
   );
 }
 
 export default function CrepisimoWebsiteConcept() {
   const [page, setPage] = useState("inicio");
+  const [cart, setCart] = useState([]);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [page]);
+
+  const cartCount = useMemo(
+    () => cart.reduce((acc, item) => acc + item.quantity, 0),
+    [cart]
+  );
 
   return (
     <div
       className="min-h-screen"
       style={{ backgroundColor: palette.neutrals.pageSoft }}
     >
-      <Header page={page} setPage={setPage} />
+      <Header page={page} setPage={setPage} cartCount={cartCount} />
 
       <AnimatePresence mode="wait">
         <motion.div
@@ -916,8 +1230,9 @@ export default function CrepisimoWebsiteConcept() {
           {page === "inicio" && <HomePage />}
           {page === "sucursales" && <BranchesPage />}
           {page === "franquicia" && <FranchisePage />}
-          {page === "concentrados" && <ConcentratesPage />}
-          {page === "contacto" && <ContactPage />}
+          {page === "productos" && (<ProductsPage cart={cart} setCart={setCart} setPage={setPage} />
+            )}
+            {page === "carrito" && <CartPage cart={cart} setCart={setCart} />}
         </motion.div>
       </AnimatePresence>
     </div>
