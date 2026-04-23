@@ -56,6 +56,13 @@
   }
 }
 
+@font-face {
+  font-family: "CrepisimoDisplay";
+  src: url("/fonts/Decoy-Light.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+
 #center {
   display: flex;
   flex-direction: column;

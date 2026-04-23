@@ -232,7 +232,34 @@ function LiquidDrips() {
   );
 }
 
-
+function StaticDripSingle() {
+  return (
+    <div
+      className="absolute inset-0 overflow-hidden"
+      style={{ backgroundColor: palette.rosa.soft }}
+    >
+      <div
+        className="absolute left-0 top-0 w-full"
+        style={{
+          height: "340px",
+          zIndex: 2,
+          overflow: "hidden",
+        }}
+      >
+        <svg
+          viewBox="0 0 1440 340"
+          className="h-full w-full"
+          preserveAspectRatio="none"
+        >
+          <path
+            fill={palette.rosa.main}
+            d="M0,0 L1440,0 L1440,145 C1320,185 1180,190 1050,165 C900,136 790,78 640,88 C500,97 398,176 260,235 C170,273 84,289 0,262 Z"
+          />
+        </svg>
+      </div>
+    </div>
+  );
+}
 
 function Header({ page, setPage }) {
   const [open, setOpen] = useState(false);
@@ -606,7 +633,199 @@ function BranchesPage() {
   );
 }
 
+function FranchisePage() {
+  return (
+    <div
+      className="relative min-h-screen overflow-hidden"
+      style={{ backgroundColor: palette.rosa.soft }}
+    >
+      <div className="absolute inset-0">
+        <StaticDripSingle />
+      </div>
 
+      <div className="relative z-10 px-6 pb-24 pt-36 md:px-10">
+        <div className="mx-auto max-w-7xl">
+          {/* HERO */}
+          <section className="text-center">
+            <h1
+              className="mx-auto max-w-4xl text-4xl font-black tracking-tight text-white md:text-6xl"
+              style={{ fontFamily: 'CrepisimoDisplay' }}
+            >
+              Lleva Crep!simo a tu ciudad
+            </h1>
+
+            <p className="mx-auto mt-6 max-w-2xl text-base leading-8 text-white/95 md:text-lg">
+              Abre una crepería con una imagen atractiva, una experiencia memorable y una marca lista para crecer.
+            </p>
+          </section>
+
+          {/* IDEAS CLAVE */}
+          <section className="mt-14">
+            <div className="grid gap-4 md:grid-cols-3">
+              <div className="rounded-[1.8rem] bg-white/78 px-6 py-5 backdrop-blur-sm">
+                <p className="text-lg font-black text-zinc-900">Imagen de marca</p>
+                <p className="mt-2 text-sm leading-6 text-zinc-700">
+                  Una identidad visual fuerte y fácil de recordar.
+                </p>
+              </div>
+
+              <div className="rounded-[1.8rem] bg-white/78 px-6 py-5 backdrop-blur-sm">
+                <p className="text-lg font-black text-zinc-900">Producto atractivo</p>
+                <p className="mt-2 text-sm leading-6 text-zinc-700">
+                  Crepas y bebidas que se antojan desde la primera vista.
+                </p>
+              </div>
+
+              <div className="rounded-[1.8rem] bg-white/78 px-6 py-5 backdrop-blur-sm">
+                <p className="text-lg font-black text-zinc-900">Oportunidad de expansión</p>
+                <p className="mt-2 text-sm leading-6 text-zinc-700">
+                  Un concepto pensado para crecer en nuevas ubicaciones.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          {/* IMAGEN + FORMULARIO */}
+          <section className="mt-16 grid items-start gap-8 lg:grid-cols-[1.05fr_0.95fr]">
+            <div className="overflow-hidden rounded-[2.3rem] shadow-[0_20px_50px_rgba(0,0,0,0.10)]">
+              <img
+                src="/sucursal.png"
+                alt="Sucursal Crep!simo"
+                className="h-[360px] w-full object-cover md:h-[620px]"
+              />
+            </div>
+
+            <div className="rounded-[2.3rem] bg-white/82 p-6 shadow-[0_20px_50px_rgba(0,0,0,0.08)] backdrop-blur-sm md:p-8">
+              <p
+                className="text-sm font-bold uppercase tracking-[0.24em]"
+                style={{ color: palette.morado.main }}
+              >
+                ¿Te interesa la marca?
+              </p>
+
+              <h2 className="mt-3 text-3xl font-black tracking-tight text-zinc-900 md:text-4xl">
+                Déjanos tus datos
+              </h2>
+
+              <p className="mt-4 text-sm leading-7 text-zinc-700 md:text-base">
+                Completa este formulario y nos pondremos en contacto contigo para compartirte más información.
+              </p>
+
+              <form className="mt-8 space-y-4">
+                <div>
+                  <label className="mb-2 block text-sm font-semibold text-zinc-800">
+                    Nombre
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Tu nombre"
+                    className="w-full rounded-[1.2rem] border border-white/60 bg-white px-4 py-3 text-sm text-zinc-900 outline-none"
+                  />
+                </div>
+
+                <div>
+                  <label className="mb-2 block text-sm font-semibold text-zinc-800">
+                    Teléfono
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Tu teléfono"
+                    className="w-full rounded-[1.2rem] border border-white/60 bg-white px-4 py-3 text-sm text-zinc-900 outline-none"
+                  />
+                </div>
+
+                <div>
+                  <label className="mb-2 block text-sm font-semibold text-zinc-800">
+                    Correo electrónico
+                  </label>
+                  <input
+                    type="email"
+                    placeholder="Tu correo"
+                    className="w-full rounded-[1.2rem] border border-white/60 bg-white px-4 py-3 text-sm text-zinc-900 outline-none"
+                  />
+                </div>
+
+                <div>
+                  <label className="mb-2 block text-sm font-semibold text-zinc-800">
+                    Ciudad de interés
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Ej. Puebla"
+                    className="w-full rounded-[1.2rem] border border-white/60 bg-white px-4 py-3 text-sm text-zinc-900 outline-none"
+                  />
+                </div>
+
+                <div>
+                  <label className="mb-2 block text-sm font-semibold text-zinc-800">
+                    Mensaje
+                  </label>
+                  <textarea
+                    placeholder="Cuéntanos un poco sobre tu interés"
+                    rows={4}
+                    className="w-full rounded-[1.2rem] border border-white/60 bg-white px-4 py-3 text-sm text-zinc-900 outline-none"
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  className="w-full rounded-full px-7 py-3 text-sm font-bold text-white"
+                  style={{ backgroundColor: palette.morado.main }}
+                >
+                  Enviar información
+                </button>
+              </form>
+
+              {/* CONTACTO */}
+              <div className="mt-8 border-t border-zinc-200 pt-6">
+                <p
+                  className="text-sm font-bold uppercase tracking-[0.22em]"
+                  style={{ color: palette.naranja.main }}
+                >
+                  También puedes contactarnos
+                </p>
+
+                <div className="mt-4 flex flex-wrap gap-3">
+                  <button
+                    className="rounded-full px-5 py-3 text-sm font-bold text-white"
+                    style={{ backgroundColor: palette.azul.main }}
+                  >
+                    Facebook
+                  </button>
+
+                  <button
+                    className="rounded-full px-5 py-3 text-sm font-bold text-white"
+                    style={{ backgroundColor: palette.rosa.main }}
+                  >
+                    Instagram
+                  </button>
+
+                  <button
+                    className="rounded-full px-5 py-3 text-sm font-bold text-white"
+                    style={{ backgroundColor: palette.naranja.main }}
+                  >
+                    Correo electrónico
+                  </button>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* IMAGEN SECUNDARIA */}
+          <section className="mt-12">
+            <div className="overflow-hidden rounded-[2.3rem] shadow-[0_20px_50px_rgba(0,0,0,0.08)]">
+              <img
+                src="/bebida_italiana.png"
+                alt="Bebida italiana Crep!simo"
+                className="h-[260px] w-full object-cover md:h-[360px]"
+              />
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 function ConcentratesPage() {
   return (
