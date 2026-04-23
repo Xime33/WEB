@@ -232,6 +232,8 @@ function LiquidDrips() {
   );
 }
 
+
+
 function Header({ page, setPage }) {
   const [open, setOpen] = useState(false);
 
@@ -604,100 +606,7 @@ function BranchesPage() {
   );
 }
 
-function FranchisePage() {
-  return (
-    <div
-      className="relative min-h-screen overflow-hidden px-6 pb-20 pt-32 md:px-10"
-      style={{ backgroundColor: palette.azul.light }}
-    >
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.55),transparent_38%)]" />
-      <div className="absolute inset-x-0 top-0 h-56 overflow-hidden opacity-90">
-        <svg viewBox="0 0 1440 260" className="h-full w-full" preserveAspectRatio="none">
-          <path
-            d="M0 42 C180 18, 340 82, 500 48 C660 14, 820 82, 980 48 C1140 14, 1300 74, 1440 42 L1440 0 L0 0 Z"
-            fill={palette.amarillo.main}
-          />
-          <path
-            d="M0 74 C160 44, 322 104, 484 76 C646 48, 804 110, 966 80 C1128 50, 1288 106, 1440 78 L1440 0 L0 0 Z"
-            fill={palette.naranja.main}
-            opacity="0.96"
-          />
-          <path
-            d="M0 28 C210 0, 390 66, 572 38 C754 10, 936 68, 1118 38 C1288 10, 1388 40, 1440 28 L1440 0 L0 0 Z"
-            fill={palette.morado.soft}
-            opacity="0.98"
-          />
-        </svg>
-      </div>
 
-      <div className="relative mx-auto max-w-7xl">
-        <div className="text-center">
-          <p
-            className="text-sm font-bold uppercase tracking-[0.28em]"
-            style={{ color: palette.morado.main }}
-          >
-            
-          </p>
-
-          <div className="mt-4 flex justify-center">
-            <BrandLogo
-              variant="main"
-              className="w-[220px] drop-shadow-[0_8px_30px_rgba(0,0,0,0.12)] md:w-[340px]"
-            />
-          </div>
-
-          <p className="mt-3 text-sm font-semibold uppercase tracking-[0.45em] text-white md:text-xl">
-            Expansión
-          </p>
-
-          <p
-            className="mx-auto mt-8 max-w-3xl text-base leading-8 md:text-lg"
-            style={{ color: palette.neutrals.text }}
-          >
-            Descubre cómo una franquicia Crep!simo puede proyectar una imagen fresca, cálida y memorable, con una identidad visual consistente y fácil de replicar.
-          </p>
-        </div>
-
-        <div className="mt-14 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-          {branches.map((branch, index) => (
-            <article
-              key={branch.city}
-              className="overflow-hidden rounded-[2.2rem] bg-white/55 shadow-[0_20px_60px_rgba(0,0,0,0.08)] ring-1 ring-white/70 backdrop-blur-sm"
-            >
-              <div
-                className="relative h-44 overflow-hidden"
-                style={{
-                  background:
-                    index % 3 === 0
-                      ? `linear-gradient(135deg, ${palette.azul.main} 0%, ${palette.morado.soft} 52%, ${palette.amarillo.main} 100%)`
-                      : index % 3 === 1
-                      ? `linear-gradient(135deg, ${palette.amarillo.main} 0%, ${palette.naranja.main} 42%, ${palette.azul.soft} 100%)`
-                      : `linear-gradient(135deg, ${palette.morado.soft} 0%, ${palette.azul.main} 52%, ${palette.rosa.soft} 100%)`,
-                }}
-              >
-                <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-white/25 to-transparent" />
-                <div className="absolute left-5 top-5 rounded-full bg-white/75 px-4 py-2 text-xs font-bold uppercase tracking-[0.2em] text-zinc-700 backdrop-blur-sm">
-                  {branch.subtitle}
-                </div>
-              </div>
-
-              <div className="p-6">
-                <h3 className="text-3xl font-black tracking-tight text-zinc-900">{branch.city}</h3>
-                <p
-                  className="mt-3 text-sm font-semibold leading-6"
-                  style={{ color: palette.morado.main }}
-                >
-                  {branch.address}
-                </p>
-                <p className="mt-4 text-sm leading-7 text-zinc-600">{branch.text}</p>
-              </div>
-            </article>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-}
 
 function ConcentratesPage() {
   return (
